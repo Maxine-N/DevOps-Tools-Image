@@ -1,7 +1,7 @@
 version: "3"
 services:
   app:
-    build: .
+    image: ghcr.io/maxine-n/devops-container:main
     command: /bin/bash
     volumes:
       - type: bind
@@ -12,3 +12,6 @@ services:
         source: ~/.kube/
         target: /root/.kube/
         read_only: false
+      - type: bind
+        source: .
+        target: /mnt
