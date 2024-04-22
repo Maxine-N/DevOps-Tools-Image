@@ -10,10 +10,11 @@ ARG kubectl_version=v1.30.0
 ARG flux_version=2.2.3
 ARG helm_version=3.14.4
 
+ARG git_version=2.43.0-r0
+
+# Dependencies
 ARG python3_version=3.11.9-r0
 ARG pip_version=23.3.1-r0
-
-ARG git_version=2.43.0-r0
 
 ARG openssl_version=3.1.4-r6
 ARG curl_version=8.5.0-r0
