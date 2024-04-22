@@ -15,6 +15,7 @@ Docker image with stuff I use as a DevOps Engineer. The image is available [on t
 - [Kubectl](https://kubernetes.io/de/docs/reference/kubectl)*
 - [Flux](https://fluxcd.io)*
 - [Helm](https://helm.sh)*
+- [K9s](https://k9scli.io)*
 
 ## How to use with [docker-compose](docker-compose.example.yaml)
 1) `docker compose run app`
