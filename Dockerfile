@@ -25,7 +25,6 @@ ARG sshpass_version=1.10-r0
 
 ARG nano_version=7.2-r1
 
-ARG pre_commit_version=3.7.0
 ARG ansible_community_general_version=8.5.0
 
 
