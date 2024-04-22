@@ -6,13 +6,13 @@ Docker image with stuff I use as a DevOps Engineer. The image is available [on t
 ## What's included
 
 ### IaC Tools
-- Ansible
-- Terraform
+- [Ansible](https://www.ansible.com)
+- [Terraform](https://www.terraform.io)
 
 ### K8s Tools
-- Kubectl (Including bash completion)
-- Flux (Including bash completion)
-- Helm (Including bash completion)
+- [Kubectl](https://kubernetes.io/de/docs/reference/kubectl) (Including bash completion)
+- [Flux](https://fluxcd.io) (Including bash completion)
+- [Helm](https://helm.sh) (Including bash completion)
 
 ## How to use with [docker-compose](docker-compose.example.yaml)
 1) `docker compose run app`
