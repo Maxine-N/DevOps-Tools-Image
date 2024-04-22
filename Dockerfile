@@ -67,6 +67,7 @@ RUN mkdir /etc/bash_completion.d && touch ~/.bashrc && \
     kubectl completion bash > /etc/bash_completion.d/kubectl && chmod a+r /etc/bash_completion.d/kubectl && \ 
     flux completion bash > /etc/bash_completion.d/flux && chmod a+r /etc/bash_completion.d/flux && \ 
     helm completion bash > /etc/bash_completion.d/helm && chmod a+r /etc/bash_completion.d/helm && \
+    k9s completion bash > /etc/bash_completion.d/k9s && chmod a+r /etc/bash_completion.d/k9s && \
     terraform -install-autocomplete && \
     tofu -install-autocomplete
 
