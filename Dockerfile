@@ -28,9 +28,8 @@ ARG nano_version=7.2-r1
 
 ARG ansible_community_general_version=8.5.0
 
-
 # Install apk packagwe
-RUN apk add --no-cache ansible=${ansible_vesrion} python3=${python3_version} py3-pip=${pip_version} && \
+RUN apk add --no-cache ansible=${ansible_vesrion} python3=${python3_version} py3-pip-pyc=${pip_version} &&\
     apk add --no-cache git=${git_version} openssl=${openssl_version} openssh=${openssh_version} sshpass=${sshpass_version} && \
     apk add --no-cache curl=${curl_version} bash=${bash_version} bash-completion=${bash_completion_version} nano=${nano_version} 
 
