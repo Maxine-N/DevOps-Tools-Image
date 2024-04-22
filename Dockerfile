@@ -3,6 +3,7 @@ FROM alpine:3.19
 # Infrastructure as code
 ARG ansible_vesrion=8.6.1-r0
 ARG terraform_version=1.8.1
+ARG opentofu_version=1.6.2
 
 # Kubernetes
 ARG kubectl_version=v1.30.0
@@ -47,6 +48,9 @@ RUN mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
     # Terraform
     curl -fsSL -o terraform.zip https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip &&  \
     unzip terraform.zip && mv ./terraform /usr/local/bin/terraform && chmod +x /usr/local/bin/terraform && \
+    # OpenTofu
+    curl -fsSL -o opentofu.zip https://github.com/opentofu/opentofu/releases/download/v${opentofu_version}/tofu_${opentofu_version}_linux_amd64.zip &&  \
+    unzip opentofu.zip && mv ./tofu /usr/local/bin/tofu && chmod +x /usr/local/bin/tofu && \
     ansible-galaxy collection install community.general:==${ansible_community_general_version}
 
 # Install bash completion scripts
