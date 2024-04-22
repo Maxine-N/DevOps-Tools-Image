@@ -54,10 +54,12 @@ RUN mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
     ansible-galaxy collection install community.general:==${ansible_community_general_version}
 
 # Install bash completion scripts
-RUN mkdir /etc/bash_completion.d && \ 
+RUN mkdir /etc/bash_completion.d && touch ~/.bashrc && \ 
     kubectl completion bash > /etc/bash_completion.d/kubectl && chmod a+r /etc/bash_completion.d/kubectl && \ 
     flux completion bash > /etc/bash_completion.d/flux && chmod a+r /etc/bash_completion.d/flux && \ 
-    helm completion bash > /etc/bash_completion.d/helm && chmod a+r /etc/bash_completion.d/helm
+    helm completion bash > /etc/bash_completion.d/helm && chmod a+r /etc/bash_completion.d/helm && \
+    terraform -install-autocomplete && \
+    tofu -install-autocomplete
 
 # Cleaunp
 RUN rm -rf /var/cache/apk/ && rm -rf /tmp/downloads

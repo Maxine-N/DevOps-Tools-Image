@@ -8,8 +8,8 @@ Docker image with stuff I use as a DevOps Engineer. The image is available [on t
 
 ### IaC Tools
 - [Ansible](https://www.ansible.com)
-- [Terraform](https://www.terraform.io)
-- [OpenTofu](https://opentofu.org)
+- [Terraform](https://www.terraform.io)*
+- [OpenTofu](https://opentofu.org)*
 
 ### K8s Tools
 - [Kubectl](https://kubernetes.io/de/docs/reference/kubectl)*
