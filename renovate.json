@@ -8,7 +8,8 @@
     {
       "customType": "regex",
       "fileMatch": [
-        "Dockerfile"
+        "(^|/|\\.)([Dd]ocker|[Cc]ontainer)file$",
+        "(^|/)([Dd]ocker|[Cc]ontainer)file[^/]*$"
       ],
       "matchStringsStrategy": "any",
       "matchStrings": [
