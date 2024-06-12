@@ -14,8 +14,7 @@
       "matchStringsStrategy": "any",
       "matchStrings": [
         "ARG .*?_VERSION=(?<currentValue>.*) # (?<datasource>.*?)/(?<depName>.*?)\\s"
-      ],
-      "versioningTemplate": "{{#if versioning}}{{versioning}}{{else}}semver{{/if}}"
+      ]
     }
   ],
   "packageRules": [
