@@ -11,32 +11,32 @@
       "groupName": "base image"
     },
     {
-      "matchPackageNames": ["ARG HELM_VERSION=(?<version>\\S+)"],
+      "matchPackagePatterns": ["ARG HELM_VERSION=(?<version>\\S+)"],
       "matchDatasources": "github-releases",
       "packageName": "helm/helm"
     },
     {
-      "matchPackageNames": ["ARG KUBECTL_VERSION=v(?<version>\\S+)"],
+      "matchPackagePatterns": ["ARG KUBECTL_VERSION=v(?<version>\\S+)"],
       "matchDatasources": "github-releases",
       "packageName": "kubernetes/kubernetes"
     },
     {
-      "matchPackageNames": ["ARG FLUX_VERSION=(?<version>\\S+)"],
+      "matchPackagePatterns": ["ARG FLUX_VERSION=(?<version>\\S+)"],
       "matchDatasources": "github-releases",
       "packageName": "fluxcd/flux2"
     },
     {
-      "matchPackageNames": ["ARG K9S_VERSION=(?<version>\\S+)"],
+      "matchPackagePatterns": ["ARG K9S_VERSION=(?<version>\\S+)"],
       "matchDatasources": "github-releases",
       "packageName": "derailed/k9s"
     },
     {
-      "matchPackageNames": ["ARG TERRAFORM_VERSION=(?<version>\\S+)"],
+      "matchPackagePatterns": ["ARG TERRAFORM_VERSION=(?<version>\\S+)"],
       "matchDatasources": "github-releases",
       "packageName": "hashicorp/terraform"
     },
     {
-      "matchPackageNames": ["ARG OPENTOFU_VERSION=(?<version>\\S+)"],
+      "matchPackagePatterns": ["ARG OPENTOFU_VERSION=(?<version>\\S+)"],
       "matchDatasources": "github-releases",
       "packageName": "opentofu/opentofu"
     }
