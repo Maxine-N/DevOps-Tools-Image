@@ -5,13 +5,13 @@ LABEL description="A Docker image containing all the tools I use for my tasks as
 # Infrastructure as code
 ARG ANSIBLE_VERSION=9.5.1-r0
 ARG TERRAFORM_VERSION=1.8.1 # github-releases/hashicorp/terraform
-ARG OPENTOFU_VERSION=1.6.2
+ARG OPENTOFU_VERSION=1.6.2 # github-releases/opentofu/opentofu
 
 # Kubernetes
-ARG KUBECTL_VERSION=v1.30.0
-ARG FLUX_VERSION=2.2.3
-ARG HELM_VERSION=3.14.4
-ARG K9S_VERSION=0.32.4
+ARG KUBECTL_VERSION=v1.30.0 # github-releases/kubernetes/kubernetes
+ARG FLUX_VERSION=2.2.3 # github-releases/fluxcd/flux2
+ARG HELM_VERSION=3.14.4 # github-releases/helm/helm
+ARG K9S_VERSION=0.32.4 # github-releases/derailed/k9s
 
 # Dependencies
 ARG PYTHON3_VERSION=3.12.3-r1
