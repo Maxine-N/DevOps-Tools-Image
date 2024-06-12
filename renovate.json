@@ -13,7 +13,7 @@
       ],
       "matchStringsStrategy": "any",
       "matchStrings": [
-        "ARG .*?_VERSION=(?<currentValue>.*) # (?<datasource>.*?)/(?<depName>.*?)\\s"
+        "ARG .*?_VERSION=(?<currentValue>.*) # (?<datasource>.*?)/(?<depName>.*?)(\\s|$)"
       ]
     }
   ],
