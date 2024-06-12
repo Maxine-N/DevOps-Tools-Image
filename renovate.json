@@ -4,6 +4,22 @@
       "config:base"
     ],
     "includePaths": ["Dockerfile"],
+    "regexManagers": [
+        {
+          "fileMatch": ["^Dockerfile$"],
+          "matchStrings": [
+            "ARG HELM_VERSION=(?<currentValue>\\S+)",
+            "ARG KUBECTL_VERSION=v(?<currentValue>\\S+)",
+            "ARG FLUX_VERSION=(?<currentValue>\\S+)",
+            "ARG K9S_VERSION=(?<currentValue>\\S+)",
+            "ARG TERRAFORM_VERSION=(?<currentValue>\\S+)",
+            "ARG OPENTOFU_VERSION=(?<currentValue>\\S+)",
+            "ARG ANSIBLE_COMMUNITY_GENERAL_VERSION=(?<currentValue>\\S+)"
+          ],
+          "datasourceTemplate": "github-releases",
+          "packageNameTemplate": "ansible-${currentValue}"
+        }
+      ],
     "packageRules": [
       {
         "matchDatasources": ["docker"],
@@ -20,23 +36,7 @@
           "hashicorp/terraform",
           "opentofu/opentofu"
         ],
-        "groupName": "release websites"
-      },
-      {
-        "matchDatasources": ["apk"],
-        "matchPackageNames": [
-          "ansible",
-          "python3",
-          "py3-pip-pyc"
-        ],
-        "groupName": "apk packages"
-      },
-      {
-        "matchDatasources": ["pypi"],
-        "matchPackageNames": [
-          "community.general"
-        ],
-        "groupName": "ansible galaxy"
+        "groupName": "github releases"
       }
     ]
   }
