@@ -1,5 +1,7 @@
 FROM alpine:3.19
 
+LABEL description="A Docker image containing all the tools I use for my tasks as a DevOps Engineer."
+
 # Infrastructure as code
 ARG ansible_vesrion=8.6.1-r0
 ARG terraform_version=1.8.1
