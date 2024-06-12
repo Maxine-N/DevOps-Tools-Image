@@ -2,10 +2,7 @@
     "extends": [
       "config:base"
     ],
-    "ignorePaths": ["**", "!Dockerfile"],
-    "dockerfile": {
-      "fileMatch": ["Dockerfile"]
-    },
+    "includePaths": ["Dockerfile"],
     "packageRules": [
       {
         "matchDatasources": ["docker"],
