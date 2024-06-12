@@ -17,22 +17,12 @@ ARG k9s_version=0.32.4
 ARG python3_version=3.11.9-r0
 ARG pip_version=23.3.1-r0
 
-ARG openssl_version=3.1.4-r6
-ARG curl_version=8.5.0-r0
-ARG bash_version=5.2.21-r0
-ARG bash_completion_version=2.11-r6
-
-ARG openssh_version=9.6_p1-r0
-ARG sshpass_version=1.10-r0
-
-ARG nano_version=7.2-r1
-
 ARG ansible_community_general_version=8.5.0
 
 # Install apk packagwe
 RUN apk add --no-cache ansible=${ansible_vesrion} python3=${python3_version} py3-pip-pyc=${pip_version} &&\
-    apk add --no-cache git openssl=${openssl_version} openssh=${openssh_version} sshpass=${sshpass_version} && \
-    apk add --no-cache curl=${curl_version} bash=${bash_version} bash-completion=${bash_completion_version} nano=${nano_version} 
+    apk add --no-cache git openssl openssh sshpass && \
+    apk add --no-cache curl bash bash-completion nano
 
 # Download packages from their release websites
 RUN mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
