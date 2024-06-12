@@ -1,6 +1,6 @@
 services:
   app:
-    image: ghcr.io/maxine-n/devops-container:main
+    image: ghcr.io/maxine-n/devops-tools-image:main
     command: /bin/bash
     volumes:
       - type: bind
