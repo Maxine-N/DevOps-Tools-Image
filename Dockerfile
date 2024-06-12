@@ -50,6 +50,7 @@ RUN mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
     mkdir -p /tmp/downloads/opentofu && cd /tmp/downloads/opentofu/ && \
     curl -fsSL -o opentofu.zip https://github.com/opentofu/opentofu/releases/download/v${OPENTOFU_VERSION}/tofu_${OPENTOFU_VERSION}_linux_amd64.zip &&  \
     unzip opentofu.zip && mv ./tofu /usr/local/bin/tofu && chmod +x /usr/local/bin/tofu && \
+    # Ansible Galaxy 
     ansible-galaxy collection install community.general:==${ANSIBLE_COMMUNITY_GENERAL_VERSION}
 
 # Install bash completion scripts
