@@ -13,11 +13,10 @@
             "ARG FLUX_VERSION=(?<currentValue>\\S+)",
             "ARG K9S_VERSION=(?<currentValue>\\S+)",
             "ARG TERRAFORM_VERSION=(?<currentValue>\\S+)",
-            "ARG OPENTOFU_VERSION=(?<currentValue>\\S+)",
-            "ARG ANSIBLE_COMMUNITY_GENERAL_VERSION=(?<currentValue>\\S+)"
+            "ARG OPENTOFU_VERSION=(?<currentValue>\\S+)"
           ],
           "datasourceTemplate": "github-releases",
-          "packageNameTemplate": "ansible-${currentValue}"
+          "packageNameTemplate": "{{depName}}"
         }
       ],
     "packageRules": [
@@ -40,4 +39,3 @@
       }
     ]
   }
-  
