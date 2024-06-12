@@ -4,6 +4,7 @@ LABEL description="A Docker image containing all the tools I use for my tasks as
 
 # Infrastructure as code
 ARG ANSIBLE_VERSION=9.5.1-r0
+# renovate: datasource=github-release depName=hashicorp/terraform
 ARG TERRAFORM_VERSION=1.8.1
 ARG OPENTOFU_VERSION=1.6.2
 

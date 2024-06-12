@@ -4,40 +4,20 @@
     "config:base"
   ],
   "includePaths": ["Dockerfile"],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "matchStringsStrategy": "any",
+      "matchStrings": [
+        "#\\s*renovate:\\s*datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\sENV .*?_VERSION=\"?(?<currentValue>.*?)\"?\\s"
+      ],
+      "versioningTemplate": "{{#if versioning}}{{versioning}}{{else}}semver{{/if}}"
+    }
+  ],
   "packageRules": [
     {
       "matchDatasources": ["docker"],
       "matchPackagePatterns": ["alpine"]
-    },
-    {
-      "matchPackagePatterns": ["HELM_VERSION"],
-      "matchDatasources": ["github-releases"],
-      "sourceUrl": "https://github.com/helm/helm"      
-    },
-    {
-      "matchDatasources": ["github-releases"],
-      "matchPackagePatterns": ["KUBECTL_VERSION"],
-      "sourceUrl": "https://github.com/kubernetes/kubernetes"
-    },
-    {
-      "matchDatasources": ["github-releases"],
-      "matchPackagePatterns": ["FLUX_VERSION"],
-      "sourceUrl": "https://github.com/fluxcd/flux2"
-    },
-    {
-      "matchDatasources": ["github-releases"],
-      "matchPackagePatterns": ["K9S_VERSION"],
-      "sourceUrl": "https://github.com/derailed/k9s"
-    },
-    {
-      "matchDatasources": ["github-releases"],
-      "matchPackagePatterns": ["TERRAFORM_VERSION"],
-      "sourceUrl": "https://github.com/hashicorp/terraform"
-    },
-    {
-      "matchDatasources": ["github-releases"],
-      "matchPackagePatterns": ["OPENTOFU_VERSION"],
-      "sourceUrl": "https://github.com/opentofu/opentofu"
     }
   ]
 }
