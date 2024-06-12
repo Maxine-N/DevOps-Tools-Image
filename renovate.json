@@ -13,7 +13,7 @@
       {
         "matchDatasources": ["github-releases"],
         "matchPackageNames": [
-          "helm.sh/helm",
+          "helm/helm/",
           "kubernetes/kubernetes",
           "fluxcd/flux2",
           "derailed/k9s",
