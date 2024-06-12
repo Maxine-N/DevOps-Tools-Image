@@ -1,41 +1,41 @@
 {
-    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-    "extends": [
-      "config:base"
-    ],
-    "includePaths": ["Dockerfile"],
-    "regexManagers": [
-        {
-          "fileMatch": ["^Dockerfile$"],
-          "matchStrings": [
-            "ARG HELM_VERSION=(?<currentValue>\\S+)",
-            "ARG KUBECTL_VERSION=v(?<currentValue>\\S+)",
-            "ARG FLUX_VERSION=(?<currentValue>\\S+)",
-            "ARG K9S_VERSION=(?<currentValue>\\S+)",
-            "ARG TERRAFORM_VERSION=(?<currentValue>\\S+)",
-            "ARG OPENTOFU_VERSION=(?<currentValue>\\S+)"
-          ],
-          "datasourceTemplate": "github-releases",
-          "packageNameTemplate": "{{depName}}"
-        }
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base"
+  ],
+  "includePaths": ["Dockerfile"],
+  "regexManagers": [
+    {
+      "fileMatch": ["^Dockerfile$"],
+      "matchStrings": [
+        "ARG HELM_VERSION=(?<currentValue>\\S+)",
+        "ARG KUBECTL_VERSION=v(?<currentValue>\\S+)",
+        "ARG FLUX_VERSION=(?<currentValue>\\S+)",
+        "ARG K9S_VERSION=(?<currentValue>\\S+)",
+        "ARG TERRAFORM_VERSION=(?<currentValue>\\S+)",
+        "ARG OPENTOFU_VERSION=(?<currentValue>\\S+)"
       ],
-    "packageRules": [
-      {
-        "matchDatasources": ["docker"],
-        "matchPackagePatterns": ["alpine"],
-        "groupName": "base image"
-      },
-      {
-        "matchDatasources": ["github-releases"],
-        "matchPackageNames": [
-          "helm/helm/",
-          "kubernetes/kubernetes",
-          "fluxcd/flux2",
-          "derailed/k9s",
-          "hashicorp/terraform",
-          "opentofu/opentofu"
-        ],
-        "groupName": "github releases"
-      }
-    ]
-  }
+      "datasourceTemplate": "github-releases",
+      "packageNameTemplate": "{{packageName}}"
+    }
+  ],
+  "packageRules": [
+    {
+      "matchDatasources": ["docker"],
+      "matchPackagePatterns": ["alpine"],
+      "groupName": "base image"
+    },
+    {
+      "matchDatasources": ["github-releases"],
+      "matchPackageNames": [
+        "helm/helm",
+        "kubernetes/kubernetes",
+        "fluxcd/flux2",
+        "derailed/k9s",
+        "hashicorp/terraform",
+        "opentofu/opentofu"
+      ],
+      "groupName": "github releases"
+    }
+  ]
+}
