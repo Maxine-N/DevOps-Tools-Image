@@ -10,9 +10,8 @@
       "matchPackagePatterns": ["alpine"]
     },
     {
-      "matchDatasources": ["github-releases"],
       "matchPackagePatterns": ["HELM_VERSION"],
-      "matchPackageNames": ["helm"],
+      "matchDatasources": ["github-releases"],
       "sourceUrl": "https://github.com/helm/helm"      
     },
     {
