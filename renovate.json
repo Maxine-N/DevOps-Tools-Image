@@ -12,32 +12,32 @@
     },
     {
       "matchPackagePatterns": ["ARG HELM_VERSION=(?<version>\\S+)"],
-      "matchDatasources": "github-releases",
+      "matchDatasources": ["github-releases"],
       "packageName": "helm/helm"
     },
     {
       "matchPackagePatterns": ["ARG KUBECTL_VERSION=v(?<version>\\S+)"],
-      "matchDatasources": "github-releases",
+      "matchDatasources": ["github-releases"],
       "packageName": "kubernetes/kubernetes"
     },
     {
       "matchPackagePatterns": ["ARG FLUX_VERSION=(?<version>\\S+)"],
-      "matchDatasources": "github-releases",
+      "matchDatasources": ["github-releases"],
       "packageName": "fluxcd/flux2"
     },
     {
       "matchPackagePatterns": ["ARG K9S_VERSION=(?<version>\\S+)"],
-      "matchDatasources": "github-releases",
+      "matchDatasources": ["github-releases"],
       "packageName": "derailed/k9s"
     },
     {
       "matchPackagePatterns": ["ARG TERRAFORM_VERSION=(?<version>\\S+)"],
-      "matchDatasources": "github-releases",
+      "matchDatasources": ["github-releases"],
       "packageName": "hashicorp/terraform"
     },
     {
       "matchPackagePatterns": ["ARG OPENTOFU_VERSION=(?<version>\\S+)"],
-      "matchDatasources": "github-releases",
+      "matchDatasources": ["github-releases"],
       "packageName": "opentofu/opentofu"
     }
   ]
