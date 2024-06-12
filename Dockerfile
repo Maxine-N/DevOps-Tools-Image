@@ -50,13 +50,13 @@ RUN mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
     mkdir -p /tmp/downloads/opentofu && cd /tmp/downloads/opentofu/ && \
     curl -fsSL -o opentofu.zip https://github.com/opentofu/opentofu/releases/download/v${OPENTOFU_VERSION}/tofu_${OPENTOFU_VERSION}_linux_amd64.zip &&  \
     unzip opentofu.zip && mv ./tofu /usr/local/bin/tofu && chmod +x /usr/local/bin/tofu && \
-    # Ansible Galaxy 
+    # Ansible Galaxy
     ansible-galaxy collection install community.general:==${ANSIBLE_COMMUNITY_GENERAL_VERSION}
 
 # Install bash completion scripts
-RUN mkdir -p /etc/bash_completion.d && touch ~/.bashrc && \ 
-    kubectl completion bash > /etc/bash_completion.d/kubectl && chmod a+r /etc/bash_completion.d/kubectl && \ 
-    flux completion bash > /etc/bash_completion.d/flux && chmod a+r /etc/bash_completion.d/flux && \ 
+RUN mkdir -p /etc/bash_completion.d && touch ~/.bashrc && \
+    kubectl completion bash > /etc/bash_completion.d/kubectl && chmod a+r /etc/bash_completion.d/kubectl && \
+    flux completion bash > /etc/bash_completion.d/flux && chmod a+r /etc/bash_completion.d/flux && \
     helm completion bash > /etc/bash_completion.d/helm && chmod a+r /etc/bash_completion.d/helm && \
     k9s completion bash > /etc/bash_completion.d/k9s && chmod a+r /etc/bash_completion.d/k9s && \
     terraform -install-autocomplete && \
