@@ -1,0 +1,45 @@
+{
+    "extends": [
+      "config:base"
+    ],
+    "ignorePaths": ["**", "!Dockerfile"],
+    "dockerfile": {
+      "fileMatch": ["Dockerfile"]
+    },
+    "packageRules": [
+      {
+        "matchDatasources": ["docker"],
+        "matchPackagePatterns": ["alpine"],
+        "groupName": "base image"
+      },
+      {
+        "matchDatasources": ["github-releases"],
+        "matchPackageNames": [
+          "helm.sh/helm",
+          "kubernetes/kubernetes",
+          "fluxcd/flux2",
+          "derailed/k9s",
+          "hashicorp/terraform",
+          "opentofu/opentofu"
+        ],
+        "groupName": "release websites"
+      },
+      {
+        "matchDatasources": ["apk"],
+        "matchPackageNames": [
+          "ansible",
+          "python3",
+          "py3-pip-pyc"
+        ],
+        "groupName": "apk packages"
+      },
+      {
+        "matchDatasources": ["pypi"],
+        "matchPackageNames": [
+          "community.general"
+        ],
+        "groupName": "ansible galaxy"
+      }
+    ]
+  }
+  
