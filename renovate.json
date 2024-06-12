@@ -7,13 +7,13 @@
   "packageRules": [
     {
       "matchDatasources": ["docker"],
-      "matchPackagePatterns": ["alpine"],
-      "groupName": "base image"
+      "matchPackagePatterns": ["alpine"]
     },
     {
       "matchPackagePatterns": ["ARG HELM_VERSION=(?<version>\\S+)"],
       "matchDatasources": ["github-releases"],
       "sourceUrl": "https://github.com/helm/helm"
+      
     },
     {
       "matchDatasources": ["github-releases"],
