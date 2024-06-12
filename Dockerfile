@@ -1,9 +1,9 @@
-FROM alpine:3.19
+FROM alpine:3.20
 
 LABEL description="A Docker image containing all the tools I use for my tasks as a DevOps Engineer."
 
 # Infrastructure as code
-ARG ansible_vesrion=8.6.1-r0
+ARG ansible_vesrion=9.5.1-r0
 ARG terraform_version=1.8.1
 ARG opentofu_version=1.6.2
 
@@ -14,8 +14,8 @@ ARG helm_version=3.14.4
 ARG k9s_version=0.32.4
 
 # Dependencies
-ARG python3_version=3.11.9-r0
-ARG pip_version=23.3.1-r0
+ARG python3_version=3.12.3-r1
+ARG pip_version=24.0-r2
 
 ARG ansible_community_general_version=8.5.0
 
@@ -53,7 +53,7 @@ RUN mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
     ansible-galaxy collection install community.general:==${ansible_community_general_version}
 
 # Install bash completion scripts
-RUN mkdir /etc/bash_completion.d && touch ~/.bashrc && \ 
+RUN mkdir -p /etc/bash_completion.d && touch ~/.bashrc && \ 
     kubectl completion bash > /etc/bash_completion.d/kubectl && chmod a+r /etc/bash_completion.d/kubectl && \ 
     flux completion bash > /etc/bash_completion.d/flux && chmod a+r /etc/bash_completion.d/flux && \ 
     helm completion bash > /etc/bash_completion.d/helm && chmod a+r /etc/bash_completion.d/helm && \
