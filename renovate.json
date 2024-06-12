@@ -4,38 +4,53 @@
     "config:base"
   ],
   "includePaths": ["Dockerfile"],
-  "regexManagers": [
-    {
-      "fileMatch": ["^Dockerfile$"],
-      "matchStrings": [
-        "ARG HELM_VERSION=(?<currentValue>\\S+)",
-        "ARG KUBECTL_VERSION=v(?<currentValue>\\S+)",
-        "ARG FLUX_VERSION=(?<currentValue>\\S+)",
-        "ARG K9S_VERSION=(?<currentValue>\\S+)",
-        "ARG TERRAFORM_VERSION=(?<currentValue>\\S+)",
-        "ARG OPENTOFU_VERSION=(?<currentValue>\\S+)"
-      ],
-      "datasourceTemplate": "github-releases",
-      "packageNameTemplate": "{{packageName}}"
-    }
-  ],
   "packageRules": [
     {
-      "matchDatasources": ["docker"],
+      "matchmatchDatasourcess": ["docker"],
       "matchPackagePatterns": ["alpine"],
       "groupName": "base image"
     },
     {
-      "matchDatasources": ["github-releases"],
-      "matchPackageNames": [
-        "helm/helm",
-        "kubernetes/kubernetes",
-        "fluxcd/flux2",
-        "derailed/k9s",
-        "hashicorp/terraform",
-        "opentofu/opentofu"
-      ],
-      "groupName": "github releases"
+      "matchPackageNames": ["ARG HELM_VERSION=(?<version>\\S+)"],
+      "matchDatasources": "github-releases",
+      "packageName": "helm/helm",
+      "versioning": "semver",
+      "extractVersion": "^(?<version>.+)$"
+    },
+    {
+      "matchPackageNames": ["ARG KUBECTL_VERSION=v(?<version>\\S+)"],
+      "matchDatasources": "github-releases",
+      "packageName": "kubernetes/kubernetes",
+      "versioning": "semver",
+      "extractVersion": "^(?<version>.+)$"
+    },
+    {
+      "matchPackageNames": ["ARG FLUX_VERSION=(?<version>\\S+)"],
+      "matchDatasources": "github-releases",
+      "packageName": "fluxcd/flux2",
+      "versioning": "semver",
+      "extractVersion": "^(?<version>.+)$"
+    },
+    {
+      "matchPackageNames": ["ARG K9S_VERSION=(?<version>\\S+)"],
+      "matchDatasources": "github-releases",
+      "packageName": "derailed/k9s",
+      "versioning": "semver",
+      "extractVersion": "^(?<version>.+)$"
+    },
+    {
+      "matchPackageNames": ["ARG TERRAFORM_VERSION=(?<version>\\S+)"],
+      "matchDatasources": "github-releases",
+      "packageName": "hashicorp/terraform",
+      "versioning": "semver",
+      "extractVersion": "^(?<version>.+)$"
+    },
+    {
+      "matchPackageNames": ["ARG OPENTOFU_VERSION=(?<version>\\S+)"],
+      "matchDatasources": "github-releases",
+      "packageName": "opentofu/opentofu",
+      "versioning": "semver",
+      "extractVersion": "^(?<version>.+)$"
     }
   ]
 }
