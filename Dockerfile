@@ -21,7 +21,7 @@ ARG VIRTUALENV_VERSION=20.26.2-r0
 ARG ANSIBLE_COMMUNITY_GENERAL_VERSION=8.5.0
 
 # Install apk packagwe
-RUN apk add --no-cache ansible=${ANSIBLE_VERSION} python3=${PYTHON3_VERSION} py3-pip=${PIP_VERSION} py3-virtualenv={VIRTUALENV_VERSION} &&\
+RUN apk add --no-cache ansible=${ANSIBLE_VERSION} python3=${PYTHON3_VERSION} py3-pip=${PIP_VERSION} py3-virtualenv=${VIRTUALENV_VERSION} &&\
     apk add --no-cache git openssl openssh sshpass && \
     apk add --no-cache curl bash bash-completion nano
 
