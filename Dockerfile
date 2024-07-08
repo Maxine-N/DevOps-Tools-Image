@@ -20,7 +20,7 @@ ARG PIP_VERSION=24.0-r2
 ARG ANSIBLE_COMMUNITY_GENERAL_VERSION=8.5.0
 
 # Install apk packagwe
-RUN apk add --no-cache ansible=${ANSIBLE_VERSION} python3=${PYTHON3_VERSION} py3-pip-pyc=${PIP_VERSION} &&\
+RUN apk add --no-cache ansible=${ANSIBLE_VERSION} python3=${PYTHON3_VERSION} py3-pip=${PIP_VERSION} &&\
     apk add --no-cache git openssl openssh sshpass && \
     apk add --no-cache curl bash bash-completion nano
 
