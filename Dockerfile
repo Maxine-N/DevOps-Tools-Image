@@ -23,7 +23,7 @@ ARG ANSIBLE_COMMUNITY_GENERAL_VERSION=9.1.0
 
 # Install apk packagwe
 RUN apk add --no-cache ansible=${ANSIBLE_VERSION} python3=${PYTHON3_VERSION} && \
-    py3-pip=${PIP_VERSION} py3-virtualenv=${VIRTUALENV_VERSION} py3-jmespath=${JMESPATH_VERSION} && \
+    apk add --no-cache py3-pip=${PIP_VERSION} py3-virtualenv=${VIRTUALENV_VERSION} py3-jmespath=${JMESPATH_VERSION} && \
     apk add --no-cache git openssl openssh sshpass && \
     apk add --no-cache curl bash bash-completion nano
 
