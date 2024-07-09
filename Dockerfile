@@ -25,7 +25,7 @@ ARG ANSIBLE_COMMUNITY_GENERAL_VERSION=9.1.0
 RUN apk add --no-cache ansible=${ANSIBLE_VERSION} python3=${PYTHON3_VERSION} && \
     apk add --no-cache py3-pip=${PIP_VERSION} py3-virtualenv=${VIRTUALENV_VERSION} py3-jmespath=${JMESPATH_VERSION} && \
     apk add --no-cache git openssl openssh sshpass && \
-    apk add --no-cache curl bash bash-completion nano
+    apk add --no-cache curl bash bash-completion tmux nano
 
 # Download packages from their release websites
 RUN mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
