@@ -16,12 +16,14 @@ ARG K9S_VERSION=0.32.4 # github-releases/derailed/k9s
 # Dependencies
 ARG PYTHON3_VERSION=3.12.3-r1
 ARG PIP_VERSION=24.0-r2
-ARG VIRTUALENV_VERSION=20.26.2-r0 
+ARG VIRTUALENV_VERSION=20.26.2-r0
+ARG JMESPATH_VERSION=1.0.1-r3
 
 ARG ANSIBLE_COMMUNITY_GENERAL_VERSION=9.1.0
 
 # Install apk packagwe
-RUN apk add --no-cache ansible=${ANSIBLE_VERSION} python3=${PYTHON3_VERSION} py3-pip=${PIP_VERSION} py3-virtualenv=${VIRTUALENV_VERSION} &&\
+RUN apk add --no-cache ansible=${ANSIBLE_VERSION} python3=${PYTHON3_VERSION} && \
+    py3-pip=${PIP_VERSION} py3-virtualenv=${VIRTUALENV_VERSION} py3-jmespath=${JMESPATH_VERSION} && \
     apk add --no-cache git openssl openssh sshpass && \
     apk add --no-cache curl bash bash-completion nano
 
