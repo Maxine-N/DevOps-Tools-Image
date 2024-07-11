@@ -11,7 +11,7 @@ ARG OPENTOFU_VERSION=1.7.2 # github-releases/opentofu/opentofu
 ARG KUBECTL_VERSION=v1.30.2 # github-releases/kubernetes/kubernetes
 ARG FLUX_VERSION=2.2.3 # github-releases/fluxcd/flux2
 ARG HELM_VERSION=3.15.2 # github-releases/helm/helm
-ARG K9S_VERSION=0.32.4 # github-releases/derailed/k9s
+ARG K9S_VERSION=0.32.5 # github-releases/derailed/k9s
 
 # Dependencies
 ARG PYTHON3_VERSION=3.12.3-r1
