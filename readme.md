@@ -12,7 +12,11 @@ A sample [docker-compose.yml](docker-compose.example.yaml) is also provided, whi
 Most tool versions in this image are managed by [Renovate](https://renovatebot.com), which automatically creates pull requests when new versions become available.
 
 ## Included Tools
-Tools marked with an asterisk (*) include bash completion.
+Tools marked with an asterisk (*) include completions.
+
+### Shell
+- [zsh](https://www.zsh.org)
+- [ohmyzsh](https://ohmyz.sh)
 
 ### Infrastructure as Code (IaC) Tools
 - [Ansible](https://www.ansible.com)
@@ -30,11 +34,30 @@ Tools marked with an asterisk (*) include bash completion.
     ```sh
     docker-compose run app
     ```
-2. Navigate to the mounted directory:
+2. Source ~/.zsh_completion
     ```sh
-    cd /mnt
+    source ~/.zsh_completion
     ```
 3. Start using your DevOps tools as needed.
+
+Step 2 can of course also be automated by including it in your `~/.zshrc` and mounting a persistent version of that. 
+
+### Tips and tricks
+
+For example by adding this to your docker-compose.yaml
+```yaml
+- type: bind
+  source: ~/.zshrc
+  target: /root/.zshrc
+  read_only: false
+```
+It's also a good idea to persist the `.zsh_history`:
+```yaml
+- type: bind
+  source: ~/.zsh_history
+  target: /root/.zsh_history
+  read_only: false
+```
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.

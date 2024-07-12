@@ -1,7 +1,6 @@
 services:
   app:
     image: ghcr.io/maxine-n/devops-tools-image:main
-    command: /bin/bash
     volumes:
       - type: bind
         source: ~/.ssh/
@@ -11,6 +10,10 @@ services:
         source: ~/.kube/
         target: /root/.kube/
         read_only: false
+      - type: bind
+        source: ~/.gitconfig
+        target: /root/.gitconfig
+        read_only: true
       - type: bind
         source: .
         target: /mnt

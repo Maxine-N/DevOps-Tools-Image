@@ -25,7 +25,7 @@ ARG ANSIBLE_COMMUNITY_GENERAL_VERSION=9.1.0
 RUN apk add --no-cache ansible=${ANSIBLE_VERSION} python3=${PYTHON3_VERSION} && \
     apk add --no-cache py3-pip=${PIP_VERSION} py3-virtualenv=${VIRTUALENV_VERSION} py3-jmespath=${JMESPATH_VERSION} && \
     apk add --no-cache git openssl openssh sshpass && \
-    apk add --no-cache curl bash bash-completion tmux nano && \
+    apk add --no-cache curl zsh tmux nano && \
     apk add --no-cache jq xq yq-go yq-go-bash-completion
 
 # Download packages from their release websites
@@ -54,17 +54,22 @@ RUN mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
     mkdir -p /tmp/downloads/opentofu && cd /tmp/downloads/opentofu/ && \
     curl -fsSL -o opentofu.zip https://github.com/opentofu/opentofu/releases/download/v${OPENTOFU_VERSION}/tofu_${OPENTOFU_VERSION}_linux_amd64.zip &&  \
     unzip opentofu.zip && mv ./tofu /usr/local/bin/tofu && chmod +x /usr/local/bin/tofu && \
+    # ohmyzsh
+    mkdir -p /tmp/downloads/ohmyzsh && cd /tmp/downloads/ohmyzsh/ && \
+    curl -fsSl -o ohmyzsh.sh https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh && \
+    sh ohmyzsh.sh && \
     # Ansible Galaxy
     ansible-galaxy collection install community.general:==${ANSIBLE_COMMUNITY_GENERAL_VERSION}
 
-# Install bash completion scripts
-RUN mkdir -p /etc/bash_completion.d && touch ~/.bashrc && \
-    kubectl completion bash > /etc/bash_completion.d/kubectl && chmod a+r /etc/bash_completion.d/kubectl && \
-    flux completion bash > /etc/bash_completion.d/flux && chmod a+r /etc/bash_completion.d/flux && \
-    helm completion bash > /etc/bash_completion.d/helm && chmod a+r /etc/bash_completion.d/helm && \
-    k9s completion bash > /etc/bash_completion.d/k9s && chmod a+r /etc/bash_completion.d/k9s && \
-    terraform -install-autocomplete && \
-    tofu -install-autocomplete
+RUN mkdir -p ~/.oh-my-zsh/completions && \
+    echo "source <(kubectl completion zsh)" >> ~/.zsh_completion && \
+    echo "source <(flux completion zsh)" >> ~/.zsh_completion && \
+    echo "source <(helm completion zsh)" >> ~/.zsh_completion && \
+    echo "source <(k9s completion zsh)" >> ~/.zsh_completion && \
+    echo "complete -C /usr/local/bin/terraform terraform" >> ~/.zsh_completion && \
+    echo "complete -C /usr/local/bin/tofu tofu" >> ~/.zsh_completion
 
 # Cleaunp
 RUN rm -rf /var/cache/apk/ && rm -rf /tmp/downloads
+
+CMD ["zsh"]
