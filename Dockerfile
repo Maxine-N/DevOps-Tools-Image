@@ -26,7 +26,8 @@ RUN apk add --no-cache ansible=${ANSIBLE_VERSION} python3=${PYTHON3_VERSION} && 
     apk add --no-cache py3-pip=${PIP_VERSION} py3-virtualenv=${VIRTUALENV_VERSION} py3-jmespath=${JMESPATH_VERSION} && \
     apk add --no-cache git openssl openssh sshpass && \
     apk add --no-cache curl zsh tmux nano font-fira-code-nerd && \
-    apk add --no-cache jq xq yq-go
+    apk add --no-cache jq xq yq-go && \
+    apk add --no-cache sudo shadow
 
 # Download packages from their release websites
 RUN mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
@@ -61,6 +62,21 @@ RUN mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
     # Ansible Galaxy
     ansible-galaxy collection install community.general:==${ANSIBLE_COMMUNITY_GENERAL_VERSION}
 
+ARG USERNAME=user
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd -s /bin/zsh --uid $USER_UID --gid $USER_GID -m $USERNAME \
+    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME
+
+# Cleaunp
+RUN rm -rf /var/cache/apk/ && rm -rf /tmp/downloads
+
+# Set the default user
+USER $USERNAME
+
 RUN mkdir -p ~/.oh-my-zsh/completions && \
     echo "source <(kubectl completion zsh)" >> ~/.zsh_completion && \
     echo "source <(flux completion zsh)" >> ~/.zsh_completion && \
@@ -68,8 +84,5 @@ RUN mkdir -p ~/.oh-my-zsh/completions && \
     echo "source <(k9s completion zsh)" >> ~/.zsh_completion && \
     echo "complete -C /usr/local/bin/terraform terraform" >> ~/.zsh_completion && \
     echo "complete -C /usr/local/bin/tofu tofu" >> ~/.zsh_completion
-
-# Cleaunp
-RUN rm -rf /var/cache/apk/ && rm -rf /tmp/downloads
 
 CMD ["zsh"]

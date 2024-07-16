@@ -48,14 +48,14 @@ For example by adding this to your docker-compose.yaml
 ```yaml
 - type: bind
   source: ~/.zshrc
-  target: /root/.zshrc
+  target: /home/user/.zshrc
   read_only: false
 ```
 It's also a good idea to persist the `.zsh_history`:
 ```yaml
 - type: bind
   source: ~/.zsh_history
-  target: /root/.zsh_history
+  target: /home/user/.zsh_history
   read_only: false
 ```
 

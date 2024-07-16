@@ -4,15 +4,15 @@ services:
     volumes:
       - type: bind
         source: ~/.ssh/
-        target: /root/.ssh/
+        target: /home/user/.ssh/
         read_only: false
       - type: bind
         source: ~/.kube/
-        target: /root/.kube/
+        target: /home/user/.kube/
         read_only: false
       - type: bind
         source: ~/.gitconfig
-        target: /root/.gitconfig
+        target: /home/user/.gitconfig
         read_only: true
       - type: bind
         source: .
