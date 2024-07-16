@@ -55,10 +55,6 @@ RUN mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
     mkdir -p /tmp/downloads/opentofu && cd /tmp/downloads/opentofu/ && \
     curl -fsSL -o opentofu.zip https://github.com/opentofu/opentofu/releases/download/v${OPENTOFU_VERSION}/tofu_${OPENTOFU_VERSION}_linux_amd64.zip &&  \
     unzip opentofu.zip && mv ./tofu /usr/local/bin/tofu && chmod +x /usr/local/bin/tofu && \
-    # ohmyzsh
-    mkdir -p /tmp/downloads/ohmyzsh && cd /tmp/downloads/ohmyzsh/ && \
-    curl -fsSl -o ohmyzsh.sh https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh && \
-    sh ohmyzsh.sh && \
     # Ansible Galaxy
     ansible-galaxy collection install community.general:==${ANSIBLE_COMMUNITY_GENERAL_VERSION}
 
@@ -76,6 +72,12 @@ RUN rm -rf /var/cache/apk/ && rm -rf /tmp/downloads
 
 # Set the default user
 USER $USERNAME
+
+RUN # ohmyzsh && \
+    mkdir -p /tmp/downloads/ohmyzsh && cd /tmp/downloads/ohmyzsh/ && \
+    curl -fsSl -o ohmyzsh.sh https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh && \
+    sh ohmyzsh.sh && \
+    rm -rf /tmp/downloads
 
 RUN mkdir -p ~/.oh-my-zsh/completions && \
     echo "source <(kubectl completion zsh)" >> ~/.zsh_completion && \
