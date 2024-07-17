@@ -72,19 +72,19 @@ RUN rm -rf /var/cache/apk/ && rm -rf /tmp/downloads
 
 # Set the default user
 USER $USERNAME
+# Change the dir to the users home
+WORKDIR "/home/user/"
 
-RUN # ohmyzsh && \
-    mkdir -p /tmp/downloads/ohmyzsh && cd /tmp/downloads/ohmyzsh/ && \
+RUN mkdir -p /home/user/downloads/ohmyzsh && cd /home/user/downloads/ohmyzsh && \
     curl -fsSl -o ohmyzsh.sh https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh && \
     sh ohmyzsh.sh && \
-    rm -rf /tmp/downloads
+    rm -rf /home/user/downloads/
 
-RUN mkdir -p ~/.oh-my-zsh/completions && \
-    echo "source <(kubectl completion zsh)" >> ~/.zsh_completion && \
+RUN echo "source <(kubectl completion zsh)" >> ~/.zsh_completion && \
     echo "source <(flux completion zsh)" >> ~/.zsh_completion && \
     echo "source <(helm completion zsh)" >> ~/.zsh_completion && \
     echo "source <(k9s completion zsh)" >> ~/.zsh_completion && \
     echo "complete -C /usr/local/bin/terraform terraform" >> ~/.zsh_completion && \
     echo "complete -C /usr/local/bin/tofu tofu" >> ~/.zsh_completion
 
-CMD ["zsh"]
+CMD ["/bin/zsh"]
