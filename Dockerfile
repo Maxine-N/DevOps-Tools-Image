@@ -27,7 +27,7 @@ RUN apk add --no-cache ansible=${ANSIBLE_VERSION} python3=${PYTHON3_VERSION} && 
     apk add --no-cache py3-pip=${PIP_VERSION} py3-virtualenv=${VIRTUALENV_VERSION} py3-jmespath=${JMESPATH_VERSION} && \
     apk add --no-cache git openssl openssh sshpass age && \
     apk add --no-cache curl zsh tmux nano font-fira-code-nerd && \
-    apk add --no-cache jq xq yq-go && \
+    apk add --no-cache jq xq yq-go fzf fzf-zsh-plugin fzf-tmux kubectx kubectx-zsh-completion && \
     apk add --no-cache sudo shadow
 
 # Download packages from their release websites
@@ -80,6 +80,7 @@ USER $USERNAME
 # Change the dir to the users home
 WORKDIR "/home/user/"
 
+# Install ohmyzsh
 RUN mkdir -p /home/user/downloads/ohmyzsh && cd /home/user/downloads/ohmyzsh && \
     curl -fsSl -o ohmyzsh.sh https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh && \
     sh ohmyzsh.sh && \
