@@ -12,6 +12,7 @@ ARG KUBECTL_VERSION=v1.30.2 # github-releases/kubernetes/kubernetes
 ARG FLUX_VERSION=2.2.3 # github-releases/fluxcd/flux2
 ARG HELM_VERSION=3.15.2 # github-releases/helm/helm
 ARG K9S_VERSION=0.32.5 # github-releases/derailed/k9s
+ARG SOPS_VERSION=3.8.1 # github-releases/getsops/sops
 
 # Dependencies
 ARG PYTHON3_VERSION=3.12.3-r1
@@ -24,7 +25,7 @@ ARG ANSIBLE_COMMUNITY_GENERAL_VERSION=9.1.0
 # Install apk packagwe
 RUN apk add --no-cache ansible=${ANSIBLE_VERSION} python3=${PYTHON3_VERSION} && \
     apk add --no-cache py3-pip=${PIP_VERSION} py3-virtualenv=${VIRTUALENV_VERSION} py3-jmespath=${JMESPATH_VERSION} && \
-    apk add --no-cache git openssl openssh sshpass && \
+    apk add --no-cache git openssl openssh sshpass age && \
     apk add --no-cache curl zsh tmux nano font-fira-code-nerd && \
     apk add --no-cache jq xq yq-go && \
     apk add --no-cache sudo shadow
@@ -32,29 +33,33 @@ RUN apk add --no-cache ansible=${ANSIBLE_VERSION} python3=${PYTHON3_VERSION} && 
 # Download packages from their release websites
 RUN mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
     # Helm
-    mkdir -p /tmp/downloads/helm && cd /tmp/downloads/helm/ && \
+    echo "Installing Helm" && mkdir -p /tmp/downloads/helm && cd /tmp/downloads/helm/ && \
     curl -fsSL -o helm.tar.gz https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
     tar -xvf helm.tar.gz && mv ./linux-amd64/helm /usr/local/bin/helm && chmod +x /usr/local/bin/helm &&\
     # Kubectl
-    mkdir -p /tmp/downloads/kubectl && cd /tmp/downloads/kubectl/ && \
+    echo "Installing Kubectl" && mkdir -p /tmp/downloads/kubectl && cd /tmp/downloads/kubectl/ && \
     curl -fsSL -o kubectl https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl && \
     mv ./kubectl /usr/local/bin/kubectl && chmod +x /usr/local/bin/kubectl && \
     # Flux
-    mkdir -p /tmp/downloads/flux && cd /tmp/downloads/flux/ && \
+    echo "Installing Flux" && mkdir -p /tmp/downloads/flux && cd /tmp/downloads/flux/ && \
     curl -fsSL -o flux.tar.gz https://github.com/fluxcd/flux2/releases/download/v${FLUX_VERSION}/flux_${FLUX_VERSION}_linux_amd64.tar.gz && \
     tar -xvf flux.tar.gz && mv ./flux /usr/local/bin/flux && chmod +x /usr/local/bin/flux &&\
     # K9s
-    mkdir -p /tmp/downloads/k9s && cd /tmp/downloads/k9s/ && \
+    echo "Installing K9s" && mkdir -p /tmp/downloads/k9s && cd /tmp/downloads/k9s/ && \
     curl -fsSL -o k9s.tar.gz https://github.com/derailed/k9s/releases/download/v${K9S_VERSION}/k9s_Linux_amd64.tar.gz && \
     tar -xvf k9s.tar.gz && mv ./k9s /usr/local/bin/k9s && chmod +x /usr/local/bin/k9s &&\
     # Terraform
-    mkdir -p /tmp/downloads/terraform && cd /tmp/downloads/terraform/ && \
+    echo "Installing Terraform" && mkdir -p /tmp/downloads/terraform && cd /tmp/downloads/terraform/ && \
     curl -fsSL -o terraform.zip https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip &&  \
     unzip terraform.zip && mv ./terraform /usr/local/bin/terraform && chmod +x /usr/local/bin/terraform && \
     # OpenTofu
-    mkdir -p /tmp/downloads/opentofu && cd /tmp/downloads/opentofu/ && \
+    echo "Installing OpenTofu" && mkdir -p /tmp/downloads/opentofu && cd /tmp/downloads/opentofu/ && \
     curl -fsSL -o opentofu.zip https://github.com/opentofu/opentofu/releases/download/v${OPENTOFU_VERSION}/tofu_${OPENTOFU_VERSION}_linux_amd64.zip &&  \
     unzip opentofu.zip && mv ./tofu /usr/local/bin/tofu && chmod +x /usr/local/bin/tofu && \
+    # sops 
+    echo "Installing sops " && mkdir -p /tmp/downloads/sops && cd /tmp/downloads/sops/ && \
+    curl -fsSL -o sops https://github.com/getsops/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux.amd64 && \
+    mv sops /usr/local/bin/sops && chmod +x /usr/local/bin/sops && \
     # Ansible Galaxy
     ansible-galaxy collection install community.general:==${ANSIBLE_COMMUNITY_GENERAL_VERSION}
 
