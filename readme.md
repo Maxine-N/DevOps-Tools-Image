@@ -25,9 +25,15 @@ Tools marked with an asterisk (*) include completions.
 
 ### Kubernetes Tools
 - [Kubectl](https://kubernetes.io/de/docs/reference/kubectl)*
+  - [Kubectx](https://kubectx.dev)*
 - [Flux](https://fluxcd.io)*
 - [Helm](https://helm.sh)*
 - [K9s](https://k9scli.io)*
+
+### Other tools 
+- [chezmoi](https://www.chezmoi.io)
+- [sops](https://getsops.io)
+- [age](https://age-encryption.org)
 
 ## How to Use This Image with Docker Compose
 1. Run the container:
