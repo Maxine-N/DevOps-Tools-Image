@@ -35,18 +35,22 @@ Tools marked with an asterisk (*) include completions.
 - [sops](https://getsops.io)
 - [age](https://age-encryption.org)
 
-## How to Use This Image with Docker Compose
+## How to Use This Image 
+### As a VSCode devcontainer
+For running it as a devcontainer see the dedicated documentation: [devcontainer.md](docs/devcontainer.md)
+### With Docker Compose
+1. Copy the [docker-compose.example.yaml](docker-compose.example.yaml) file to your local environment and rename it to `docker-compose.yaml`.
 1. Run the container:
     ```sh
     docker-compose run app
     ```
-2. Source ~/.zsh_completion
+1. Source ~/.zsh_completion
     ```sh
     source ~/.zsh_completion
     ```
-3. Start using your DevOps tools as needed.
+1. Start using your DevOps tools as needed.
 
-Step 2 can of course also be automated by including it in your `~/.zshrc` and mounting a persistent version of that. 
+Sourcing `~/.zsh_completion` can of course also be automated by including it in your `.zshrc` and mounting a persistent version of your `.zshrc`. 
 
 ### Tips and tricks
 
