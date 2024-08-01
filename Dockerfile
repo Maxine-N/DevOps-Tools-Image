@@ -11,6 +11,7 @@ ARG OPENTOFU_VERSION=1.7.3 # github-releases/opentofu/opentofu
 ARG KUBECTL_VERSION=v1.30.3 # github-releases/kubernetes/kubernetes
 ARG FLUX_VERSION=2.2.3 # github-releases/fluxcd/flux2
 ARG HELM_VERSION=3.15.3 # github-releases/helm/helm
+ARG LONGHORNCTL_VERSION=v1.7.0-rc2 # github-releases/longhorn/cli
 ARG K9S_VERSION=0.32.5 # github-releases/derailed/k9s
 ARG SOPS_VERSION=3.9.0 # github-releases/getsops/sops
 
@@ -44,6 +45,10 @@ RUN mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
     echo "Installing Flux" && mkdir -p /tmp/downloads/flux && cd /tmp/downloads/flux/ && \
     curl -fsSL -o flux.tar.gz https://github.com/fluxcd/flux2/releases/download/v${FLUX_VERSION}/flux_${FLUX_VERSION}_linux_amd64.tar.gz && \
     tar -xvf flux.tar.gz && mv ./flux /usr/local/bin/flux && chmod +x /usr/local/bin/flux &&\
+    # longhornctl
+    echo "Installing longhornctl" && mkdir -p /tmp/downloads/longhornctl && cd /tmp/downloads/longhornctl/ && \
+    curl -fsSL -o longhornctl https://github.com/longhorn/cli/releases/download/v${LONGHORNCTL_VERSION}/longhornctl-local-linux-amd64  && \
+    mv ./longhornctl /usr/local/bin/longhornctl && chmod +x /usr/local/bin/longhornctl && \
     # K9s
     echo "Installing K9s" && mkdir -p /tmp/downloads/k9s && cd /tmp/downloads/k9s/ && \
     curl -fsSL -o k9s.tar.gz https://github.com/derailed/k9s/releases/download/v${K9S_VERSION}/k9s_Linux_amd64.tar.gz && \
