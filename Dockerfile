@@ -10,6 +10,7 @@ ARG OPENTOFU_VERSION=1.7.3 # github-releases/opentofu/opentofu
 # Kubernetes
 ARG KUBECTL_VERSION=v1.30.3 # github-releases/kubernetes/kubernetes
 ARG FLUX_VERSION=2.2.3 # github-releases/fluxcd/flux2
+ARG ARGOCD_VERSION=2.8.21 # github-releases/argoproj/argo-cd
 ARG HELM_VERSION=3.15.3 # github-releases/helm/helm
 ARG LONGHORNCTL_VERSION=1.7.0-rc2 # github-releases/longhorn/cli
 ARG K9S_VERSION=0.32.5 # github-releases/derailed/k9s
@@ -45,6 +46,10 @@ RUN mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
     echo "Installing Flux" && mkdir -p /tmp/downloads/flux && cd /tmp/downloads/flux/ && \
     curl -fsSL -o flux.tar.gz https://github.com/fluxcd/flux2/releases/download/v${FLUX_VERSION}/flux_${FLUX_VERSION}_linux_amd64.tar.gz && \
     tar -xvf flux.tar.gz && mv ./flux /usr/local/bin/flux && chmod +x /usr/local/bin/flux &&\
+    # Argocd
+    echo "Installing argocd" && mkdir -p /tmp/downloads/argocd && cd /tmp/downloads/argocd/ && \
+    curl -fsSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/download/v${ARGOCD_VERSION}/argocd-linux-amd64 && \
+    sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd &&\
     # longhornctl
     echo "Installing longhornctl & longhornctl-local" && mkdir -p /tmp/downloads/longhornctl && cd /tmp/downloads/longhornctl/ && \
     curl -fsSL -o longhornctl https://github.com/longhorn/cli/releases/download/v${LONGHORNCTL_VERSION}/longhornctl-linux-amd64   && \
