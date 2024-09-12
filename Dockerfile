@@ -8,7 +8,7 @@ ARG TERRAFORM_VERSION=1.9.2 # github-releases/hashicorp/terraform
 ARG OPENTOFU_VERSION=1.8.2 # github-releases/opentofu/opentofu
 
 # Kubernetes
-ARG KUBECTL_VERSION=v1.30.3 # github-releases/kubernetes/kubernetes
+ARG KUBECTL_VERSION=v1.31.1 # github-releases/kubernetes/kubernetes
 ARG FLUX_VERSION=2.2.3 # github-releases/fluxcd/flux2
 ARG ARGOCD_VERSION=2.12.3 # github-releases/argoproj/argo-cd
 ARG HELM_VERSION=3.15.4 # github-releases/helm/helm
