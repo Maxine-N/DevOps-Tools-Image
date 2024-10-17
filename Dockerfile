@@ -5,16 +5,16 @@ LABEL description="A Docker image containing all the tools I use for my tasks as
 # Infrastructure as code
 ARG ANSIBLE_VERSION=9.5.1-r0
 ARG TERRAFORM_VERSION=1.9.8 # github-releases/hashicorp/terraform
-ARG OPENTOFU_VERSION=1.8.2 # github-releases/opentofu/opentofu
+ARG OPENTOFU_VERSION=1.8.3 # github-releases/opentofu/opentofu
 
 # Kubernetes
 ARG KUBECTL_VERSION=v1.30.3 # github-releases/kubernetes/kubernetes
 ARG FLUX_VERSION=2.2.3 # github-releases/fluxcd/flux2
-ARG ARGOCD_VERSION=2.12.3 # github-releases/argoproj/argo-cd
-ARG HELM_VERSION=3.15.4 # github-releases/helm/helm
+ARG ARGOCD_VERSION=2.12.4 # github-releases/argoproj/argo-cd
+ARG HELM_VERSION=3.16.2 # github-releases/helm/helm
 ARG LONGHORNCTL_VERSION=1.7.0-rc2 # github-releases/longhorn/cli
 ARG K9S_VERSION=0.32.5 # github-releases/derailed/k9s
-ARG SOPS_VERSION=3.9.0 # github-releases/getsops/sops
+ARG SOPS_VERSION=3.9.1 # github-releases/getsops/sops
 
 # Ansible Galaxy
 ARG ANSIBLE_COMMUNITY_GENERAL_VERSION=9.1.0
@@ -23,7 +23,7 @@ ARG ANSIBLE_COMMUNITY_GENERAL_VERSION=9.1.0
 RUN apk add --no-cache ansible python3 && \
     apk add --no-cache py3-pip py3-virtualenv py3-jmespath && \
     apk add --no-cache git openssl openssh sshpass age chezmoi && \
-    apk add --no-cache curl zsh tmux nano font-fira-code-nerd && \
+    apk add --no-cache curl zsh tmux nano font-fira-code-nerd viddy && \
     apk add --no-cache jq xq yq-go fzf fzf-zsh-plugin fzf-tmux kubectx kubectx-zsh-completion && \
     apk add --no-cache sudo shadow
 
