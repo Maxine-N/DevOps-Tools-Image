@@ -10,7 +10,7 @@ ARG OPENTOFU_VERSION=1.8.2 # github-releases/opentofu/opentofu
 # Kubernetes
 ARG KUBECTL_VERSION=v1.30.3 # github-releases/kubernetes/kubernetes
 ARG FLUX_VERSION=2.2.3 # github-releases/fluxcd/flux2
-ARG ARGOCD_VERSION=2.12.3 # github-releases/argoproj/argo-cd
+ARG ARGOCD_VERSION=2.12.4 # github-releases/argoproj/argo-cd
 ARG HELM_VERSION=3.15.4 # github-releases/helm/helm
 ARG LONGHORNCTL_VERSION=1.7.0-rc2 # github-releases/longhorn/cli
 ARG K9S_VERSION=0.32.5 # github-releases/derailed/k9s
