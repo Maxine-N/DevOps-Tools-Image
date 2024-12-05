@@ -58,8 +58,8 @@ RUN mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
     sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd &&\
     # longhornctl
     echo "Installing longhornctl & longhornctl-local" && mkdir -p /tmp/downloads/longhornctl && cd /tmp/downloads/longhornctl/ && \
-    curl -fsSL -o longhornctl https://github.com/longhorn/cli/releases/download/v${LONGHORNCTL_VERSION}/longhornctl-linux-amd64   && \
-    curl -fsSL -o longhornctl-local https://github.com/longhorn/cli/releases/download/v${LONGHORNCTL_VERSION}/longhornctl-local-linux-amd64  && \
+    curl -fsSL -o longhornctl https://github.com/longhorn/cli/releases/download/${LONGHORNCTL_VERSION}/longhornctl-linux-amd64   && \
+    curl -fsSL -o longhornctl-local https://github.com/longhorn/cli/releases/download/${LONGHORNCTL_VERSION}/longhornctl-local-linux-amd64  && \
     mv ./longhornctl /usr/local/bin/longhornctl && chmod +x /usr/local/bin/longhornctl && \
     mv ./longhornctl-local /usr/local/bin/longhornctl-local && chmod +x /usr/local/bin/longhornctl-local && \
     # K9s
