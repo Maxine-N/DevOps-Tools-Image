@@ -26,6 +26,7 @@ Tools marked with an asterisk (*) include completions.
 ### Kubernetes Tools
 - [Kubectl](https://kubernetes.io/de/docs/reference/kubectl)*
   - [Kubectx](https://kubectx.dev)*
+  - [Krew](https://krew.sigs.k8s.io)*
 - [Flux](https://fluxcd.io)*
 - [Helm](https://helm.sh)*
 - [K9s](https://k9scli.io)*
