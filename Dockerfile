@@ -9,6 +9,7 @@ ARG OPENTOFU_VERSION=1.8.7 # github-releases/opentofu/opentofu
 
 # Kubernetes
 ARG KUBECTL_VERSION=v1.31.3 # github-releases/kubernetes/kubernetes
+ARG KREW_VERSION=v0.4.4 # github-releases/kubernetes-sigs/krew
 ARG FLUX_VERSION=2.4.0 # github-releases/fluxcd/flux2
 ARG ARGOCD_VERSION=2.13.1 # github-releases/argoproj/argo-cd
 ARG HELM_VERSION=3.16.3 # github-releases/helm/helm
@@ -37,6 +38,16 @@ RUN mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
     echo "Installing Kubectl" && mkdir -p /tmp/downloads/kubectl && cd /tmp/downloads/kubectl/ && \
     curl -fsSL -o kubectl https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl && \
     mv ./kubectl /usr/local/bin/kubectl && chmod +x /usr/local/bin/kubectl && \
+    # Krew
+    ( \
+        set -x; cd "$(mktemp -d)" && \
+        OS="$(uname | tr '[:upper:]' '[:lower:]')" && \
+        ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" && \
+        KREW="krew-${OS}_${ARCH}" && \
+        curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/${KREW_VERSION}/download/${KREW}.tar.gz" && \
+        tar zxvf "${KREW}.tar.gz" && \
+        ./"${KREW}" install krew \
+    ) \
     # Flux
     echo "Installing Flux" && mkdir -p /tmp/downloads/flux && cd /tmp/downloads/flux/ && \
     curl -fsSL -o flux.tar.gz https://github.com/fluxcd/flux2/releases/download/v${FLUX_VERSION}/flux_${FLUX_VERSION}_linux_amd64.tar.gz && \
