@@ -14,7 +14,7 @@ ARG ARGOCD_VERSION=2.12.4 # github-releases/argoproj/argo-cd
 ARG HELM_VERSION=3.16.2 # github-releases/helm/helm
 ARG LONGHORNCTL_VERSION=1.7.0-rc2 # github-releases/longhorn/cli
 ARG K9S_VERSION=0.32.5 # github-releases/derailed/k9s
-ARG SOPS_VERSION=3.9.1 # github-releases/getsops/sops
+ARG SOPS_VERSION=3.9.2 # github-releases/getsops/sops
 
 # Ansible Galaxy
 ARG ANSIBLE_COMMUNITY_GENERAL_VERSION=9.1.0
