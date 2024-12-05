@@ -38,10 +38,6 @@ RUN mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
     echo "Installing Kubectl" && mkdir -p /tmp/downloads/kubectl && cd /tmp/downloads/kubectl/ && \
     curl -fsSL -o kubectl https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl && \
     mv ./kubectl /usr/local/bin/kubectl && chmod +x /usr/local/bin/kubectl && \
-    # Krew
-    echo "Installing krew" && mkdir -p /tmp/downloads/krew && cd /tmp/downloads/krew/ && \
-    curl -fsSL -o krew.tar.gz https://github.com/kubernetes-sigs/krew/releases/download/${KREW_VERSION}/krew-linux_amd64.tar.gz && \
-    tar -xvf krew.tar.gz && ./krew-linux_amd64 install krew &&\
     # Flux
     echo "Installing Flux" && mkdir -p /tmp/downloads/flux && cd /tmp/downloads/flux/ && \
     curl -fsSL -o flux.tar.gz https://github.com/fluxcd/flux2/releases/download/v${FLUX_VERSION}/flux_${FLUX_VERSION}_linux_amd64.tar.gz && \
@@ -93,9 +89,13 @@ USER $USERNAME
 WORKDIR "/home/user/"
 
 # Install ohmyzsh
-RUN mkdir -p /home/user/downloads/ohmyzsh && cd /home/user/downloads/ohmyzsh && \
+RUN echo "Installing ohmyzsh" && mkdir -p /home/user/downloads/ohmyzsh && cd /home/user/downloads/ohmyzsh && \
     curl -fsSl -o ohmyzsh.sh https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh && \
     sh ohmyzsh.sh && \
+    # Krew
+    echo "Installing krew" && mkdir -p /home/user/downloads/krew && cd /home/user/downloads/krew/ && \
+    curl -fsSL -o krew.tar.gz https://github.com/kubernetes-sigs/krew/releases/download/${KREW_VERSION}/krew-linux_amd64.tar.gz && \
+    tar -xvf krew.tar.gz && ./krew-linux_amd64 install krew && \
     rm -rf /home/user/downloads/
 
 RUN echo "source <(kubectl completion zsh)" >> ~/.zsh_completion && \
