@@ -39,15 +39,9 @@ RUN mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
     curl -fsSL -o kubectl https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl && \
     mv ./kubectl /usr/local/bin/kubectl && chmod +x /usr/local/bin/kubectl && \
     # Krew
-    ( \
-        set -x; cd "$(mktemp -d)" && \
-        OS="$(uname | tr '[:upper:]' '[:lower:]')" && \
-        ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" && \
-        KREW="krew-${OS}_${ARCH}" && \
-        curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/${KREW_VERSION}/download/${KREW}.tar.gz" && \
-        tar zxvf "${KREW}.tar.gz" && \
-        ./"${KREW}" install krew \
-    ) \
+    echo "Installing krew" && mkdir -p /tmp/downloads/krew && cd /tmp/downloads/krew/ && \
+    curl -fsSL -o krew.tar.gz https://github.com/kubernetes-sigs/krew/releases/download/${KREW_VERSION}/krew-linux_amd64.tar.gz && \
+    tar -xvf krew.tar.gz && ./krew-linux_amd64 install krew &&\
     # Flux
     echo "Installing Flux" && mkdir -p /tmp/downloads/flux && cd /tmp/downloads/flux/ && \
     curl -fsSL -o flux.tar.gz https://github.com/fluxcd/flux2/releases/download/v${FLUX_VERSION}/flux_${FLUX_VERSION}_linux_amd64.tar.gz && \
