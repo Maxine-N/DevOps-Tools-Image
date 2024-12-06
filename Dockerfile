@@ -1,4 +1,4 @@
-FROM alpine:3.20
+FROM alpine:3.21
 
 LABEL description="A Docker image containing all the tools I use for my tasks as a DevOps Engineer."
 
