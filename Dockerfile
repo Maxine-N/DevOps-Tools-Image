@@ -25,7 +25,8 @@ RUN apk add --no-cache ansible python3 && \
     apk add --no-cache py3-pip py3-virtualenv py3-jmespath && \
     apk add --no-cache git openssl openssh sshpass age chezmoi && \
     apk add --no-cache curl zsh tmux nano font-fira-code-nerd viddy && \
-    apk add --no-cache jq xq yq-go fzf fzf-zsh-plugin fzf-tmux kubectx kubectx-zsh-completion && \
+    apk add --no-cache ncurses tput && \
+    apk add --no-cache jq xq yq-go fzf fzf-zsh-plugin fzf-tmux kubectx kubectx-zsh-completion jinja2-cli && \
     apk add --no-cache sudo shadow
 
 # Download packages from their release websites
