@@ -13,7 +13,7 @@ ARG KREW_VERSION=v0.4.4 # github-releases/kubernetes-sigs/krew
 ARG FLUX_VERSION=2.4.0 # github-releases/fluxcd/flux2
 ARG ARGOCD_VERSION=2.14.1 # github-releases/argoproj/argo-cd
 ARG HELM_VERSION=3.17.0 # github-releases/helm/helm
-ARG LONGHORNCTL_VERSION=v1.7.2 # github-releases/longhorn/cli
+ARG LONGHORNCTL_VERSION=v1.8.0 # github-releases/longhorn/cli
 ARG K9S_VERSION=0.32.7 # github-releases/derailed/k9s
 ARG SOPS_VERSION=3.9.4 # github-releases/getsops/sops
 
