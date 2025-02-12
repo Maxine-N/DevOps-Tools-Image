@@ -100,7 +100,6 @@ RUN echo "Installing ohmyzsh" && mkdir -p /home/user/downloads/ohmyzsh && cd /ho
     echo "Installing stern https://github.com/stern/stern" && kubectl krew install stern && \
     echo "Installing explore https://github.com/keisku/kubectl-explore" && kubectl krew install explore && \
     echo "Installing node-shell https://github.com/kvaps/kubectl-node-shell" && kubectl krew install node-shell && \
-    echo "Installing ingress-nginx https://github.com/kubernetes/ingress-nginx" && kubectl krew install ingress-nginx && \
     rm -rf /home/user/downloads/
 
 RUN echo "source <(kubectl completion zsh)" >> ~/.zsh_completion && \
