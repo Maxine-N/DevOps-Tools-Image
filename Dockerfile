@@ -96,6 +96,10 @@ RUN echo "Installing ohmyzsh" && mkdir -p /home/user/downloads/ohmyzsh && cd /ho
     echo "Installing krew" && mkdir -p /home/user/downloads/krew && cd /home/user/downloads/krew/ && \
     curl -fsSL -o krew.tar.gz https://github.com/kubernetes-sigs/krew/releases/download/${KREW_VERSION}/krew-linux_amd64.tar.gz && \
     tar -xvf krew.tar.gz && ./krew-linux_amd64 install krew && \
+    echo "Installing krew plugins" && export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" && \
+    echo "Installing stern https://github.com/stern/stern" && kubectl krew install stern && \
+    echo "Installing explore https://github.com/keisku/kubectl-explore" && kubectl krew install explore && \
+    echo "Installing node-shell https://github.com/kvaps/kubectl-node-shell" && kubectl krew install node-shell && \
     rm -rf /home/user/downloads/
 
 RUN echo "source <(kubectl completion zsh)" >> ~/.zsh_completion && \
