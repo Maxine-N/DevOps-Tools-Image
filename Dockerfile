@@ -8,6 +8,7 @@ ARG TERRAFORM_VERSION=1.10.5 # github-releases/hashicorp/terraform
 ARG OPENTOFU_VERSION=1.9.0 # github-releases/opentofu/opentofu
 
 # Kubernetes
+ARG TALOSCTL_VERSION=v1.9.3 # github-releases/siderolabs/talos
 ARG KUBECTL_VERSION=v1.31.3 # github-releases/kubernetes/kubernetes
 ARG KREW_VERSION=v0.4.4 # github-releases/kubernetes-sigs/krew
 ARG FLUX_VERSION=2.4.0 # github-releases/fluxcd/flux2
@@ -38,6 +39,10 @@ RUN mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
     echo "Installing Kubectl" && mkdir -p /tmp/downloads/kubectl && cd /tmp/downloads/kubectl/ && \
     curl -fsSL -o kubectl https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl && \
     mv ./kubectl /usr/local/bin/kubectl && chmod +x /usr/local/bin/kubectl && \
+    # talosctl
+    echo "Installing talosctl" && mkdir -p /tmp/downloads/talosctl && cd /tmp/downloads/talosctl/ && \
+    curl -fsSL -o talosctl https://github.com/siderolabs/talos/releases/download/${TALOSCTL_VERSION}/talosctl-linux-amd64 && \
+    mv ./talosctl /usr/local/bin/talosctl && chmod +x /usr/local/bin/talosctl && \
     # Flux
     echo "Installing Flux" && mkdir -p /tmp/downloads/flux && cd /tmp/downloads/flux/ && \
     curl -fsSL -o flux.tar.gz https://github.com/fluxcd/flux2/releases/download/v${FLUX_VERSION}/flux_${FLUX_VERSION}_linux_amd64.tar.gz && \
