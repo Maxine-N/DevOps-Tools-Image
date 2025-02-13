@@ -32,11 +32,11 @@ RUN apk add --no-cache ansible python3 && \
 # Download packages from their release websites
 RUN mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
     # Helm
-    echo "Installing Helm" && mkdir -p /tmp/downloads/helm && cd /tmp/downloads/helm/ && \
+    echo "Installing helm" && mkdir -p /tmp/downloads/helm && cd /tmp/downloads/helm/ && \
     curl -fsSL -o helm.tar.gz https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
     tar -xvf helm.tar.gz && mv ./linux-amd64/helm /usr/local/bin/helm && chmod +x /usr/local/bin/helm &&\
     # Kubectl
-    echo "Installing Kubectl" && mkdir -p /tmp/downloads/kubectl && cd /tmp/downloads/kubectl/ && \
+    echo "Installing kubectl" && mkdir -p /tmp/downloads/kubectl && cd /tmp/downloads/kubectl/ && \
     curl -fsSL -o kubectl https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl && \
     mv ./kubectl /usr/local/bin/kubectl && chmod +x /usr/local/bin/kubectl && \
     # talosctl
@@ -44,7 +44,7 @@ RUN mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
     curl -fsSL -o talosctl https://github.com/siderolabs/talos/releases/download/${TALOSCTL_VERSION}/talosctl-linux-amd64 && \
     mv ./talosctl /usr/local/bin/talosctl && chmod +x /usr/local/bin/talosctl && \
     # Flux
-    echo "Installing Flux" && mkdir -p /tmp/downloads/flux && cd /tmp/downloads/flux/ && \
+    echo "Installing flux" && mkdir -p /tmp/downloads/flux && cd /tmp/downloads/flux/ && \
     curl -fsSL -o flux.tar.gz https://github.com/fluxcd/flux2/releases/download/v${FLUX_VERSION}/flux_${FLUX_VERSION}_linux_amd64.tar.gz && \
     tar -xvf flux.tar.gz && mv ./flux /usr/local/bin/flux && chmod +x /usr/local/bin/flux &&\
     # Argocd
@@ -58,15 +58,15 @@ RUN mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
     mv ./longhornctl /usr/local/bin/longhornctl && chmod +x /usr/local/bin/longhornctl && \
     mv ./longhornctl-local /usr/local/bin/longhornctl-local && chmod +x /usr/local/bin/longhornctl-local && \
     # K9s
-    echo "Installing K9s" && mkdir -p /tmp/downloads/k9s && cd /tmp/downloads/k9s/ && \
+    echo "Installing k9s" && mkdir -p /tmp/downloads/k9s && cd /tmp/downloads/k9s/ && \
     curl -fsSL -o k9s.tar.gz https://github.com/derailed/k9s/releases/download/v${K9S_VERSION}/k9s_Linux_amd64.tar.gz && \
     tar -xvf k9s.tar.gz && mv ./k9s /usr/local/bin/k9s && chmod +x /usr/local/bin/k9s &&\
     # Terraform
-    echo "Installing Terraform" && mkdir -p /tmp/downloads/terraform && cd /tmp/downloads/terraform/ && \
+    echo "Installing terraform" && mkdir -p /tmp/downloads/terraform && cd /tmp/downloads/terraform/ && \
     curl -fsSL -o terraform.zip https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip &&  \
     unzip terraform.zip && mv ./terraform /usr/local/bin/terraform && chmod +x /usr/local/bin/terraform && \
     # OpenTofu
-    echo "Installing OpenTofu" && mkdir -p /tmp/downloads/opentofu && cd /tmp/downloads/opentofu/ && \
+    echo "Installing opentofu" && mkdir -p /tmp/downloads/opentofu && cd /tmp/downloads/opentofu/ && \
     curl -fsSL -o opentofu.zip https://github.com/opentofu/opentofu/releases/download/v${OPENTOFU_VERSION}/tofu_${OPENTOFU_VERSION}_linux_amd64.zip &&  \
     unzip opentofu.zip && mv ./tofu /usr/local/bin/tofu && chmod +x /usr/local/bin/tofu && \
     # sops 
