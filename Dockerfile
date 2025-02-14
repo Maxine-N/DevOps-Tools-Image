@@ -108,7 +108,7 @@ RUN echo "Installing ohmyzsh" && mkdir -p /home/user/downloads/ohmyzsh && cd /ho
     rm -rf /home/user/downloads/
 
 RUN echo "source <(kubectl completion zsh)" >> ~/.zsh_completion && \
-RUN echo "source <(talosctl completion zsh)" >> ~/.zsh_completion && \
+    echo "source <(talosctl completion zsh)" >> ~/.zsh_completion && \
     echo "source <(flux completion zsh)" >> ~/.zsh_completion && \
     echo "source <(helm completion zsh)" >> ~/.zsh_completion && \
     echo "source <(k9s completion zsh)" >> ~/.zsh_completion && \
