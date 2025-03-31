@@ -73,6 +73,10 @@ RUN mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
     echo "Installing sops " && mkdir -p /tmp/downloads/sops && cd /tmp/downloads/sops/ && \
     curl -fsSL -o sops https://github.com/getsops/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux.amd64 && \
     mv sops /usr/local/bin/sops && chmod +x /usr/local/bin/sops && \
+    # minio client
+    echo "Installing minio client " && mkdir -p /tmp/downloads/minio && cd /tmp/downloads/minio/ && \
+    curl -fsSL -o mc https://dl.min.io/client/mc/release/linux-amd64/mc && \
+    mv mc /usr/local/bin/mc && chmod +x /usr/local/bin/mc && \
     # Ansible Galaxy
     ansible-galaxy collection install community.general:==${ANSIBLE_COMMUNITY_GENERAL_VERSION}
 
