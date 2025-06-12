@@ -1,4 +1,4 @@
-FROM alpine:3.20
+FROM alpine:3.22
 
 LABEL description="A Docker image containing all the tools I use for my tasks as a DevOps Engineer."
 
@@ -26,7 +26,7 @@ RUN apk add --no-cache ansible python3 && \
     apk add --no-cache py3-pip py3-virtualenv py3-jmespath && \
     apk add --no-cache git openssl openssh sshpass age chezmoi && \
     apk add --no-cache curl zsh tmux nano font-fira-code-nerd viddy ncurses && \
-    apk add --no-cache jq xq yq-go fzf fzf-zsh-plugin fzf-tmux kubectx kubectx-zsh-completion jinja2-cli postgresql-client && \
+    apk add --no-cache jq xq yq-go fzf fzf-zsh-plugin fzf-tmux kubectx kubectx-zsh-completion jinja2-cli && \
     apk add --no-cache docker-cli docker-cli-compose kind && \
     apk add --no-cache sudo shadow
 
