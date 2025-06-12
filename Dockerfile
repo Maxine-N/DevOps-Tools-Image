@@ -133,7 +133,7 @@ RUN echo "Installing ohmyzsh" && mkdir -p ~/downloads/ohmyzsh && cd ~/downloads/
     rm -rf ~/downloads
 
 # Install asdf packages
-RUN asdf plugin add chezmoi && asdf install chezmoi 2.62.6 && asdf global chezmoi 2.62.6
+RUN asdf plugin add chezmoi && asdf install chezmoi 2.62.6
 
 # Zsh completions
 RUN echo "source <(kubectl completion zsh)" >> ~/.zsh_completion && \
