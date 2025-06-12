@@ -30,9 +30,17 @@ RUN apt-get update && \
       python3 python3-pip python3-virtualenv python3-jmespath \
       git openssl openssh-client sshpass age \
       curl zsh tmux nano fonts-firacode \
-      jq yq fzf kubectx sudo unzip && \
+      jq yq fzf kubectx sudo unzip locales && \
     # Clean up
     apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Set locales
+RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
+    locale-gen && \
+    update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
+
+ENV LANG=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
 
 # Download packages from their release websites
 RUN mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
@@ -122,14 +130,16 @@ RUN echo "Installing ohmyzsh" && mkdir -p ~/downloads/ohmyzsh && cd ~/downloads/
     git clone --depth 1 https://github.com/unixorn/fzf-zsh-plugin.git ~/.oh-my-zsh/custom/plugins/fzf-zsh-plugin && \
     # ohmyzsh - kubectx
     echo "Installing ohmyzsh - kubectx" && \
-    ln -s /opt/kubectx/completion/_kubectx.zsh ~/.oh-my-zsh/custom/completions/_kubectx.zsh && \
-    ln -s /opt/kubectx/completion/_kubens.zsh ~/.oh-my-zsh/custom/completions/_kubens.zsh && \
+    git clone --depth 1 https://github.com/ahmetb/kubectx.git ~/.kubectx && \
+    mv ~/.kubectx/completion/_kubectx.zsh ~/.oh-my-zsh/custom/completions/_kubectx.zsh && \
+    mv ~/.kubectx/completion/_kubens.zsh ~/.oh-my-zsh/custom/completions/_kubens.zsh && \
+    rm -rf ~/.kubectx && \
     # krew
     echo "Installing krew" && mkdir -p ~/downloads/krew && cd ~/downloads/krew && \
     curl -fsSL -o krew.tar.gz https://github.com/kubernetes-sigs/krew/releases/download/${KREW_VERSION}/krew-linux_amd64.tar.gz && \
     tar -xzf krew.tar.gz && ./krew-linux_amd64 install krew && \
     export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" && \
-    kubectl krew install stern explore node-shell && \
+    kubectl krew install stern explore node-shell ctx ns && \
     rm -rf ~/downloads
 
 # Install asdf packages
