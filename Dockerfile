@@ -96,9 +96,6 @@ RUN mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
     # Ansible Galaxy
     ansible-galaxy collection install community.general:==${ANSIBLE_COMMUNITY_GENERAL_VERSION}
 
-# Install asdf packages
-RUN asdf plugin add chezmoi && asdf install chezmoi 2.62.6
-
 ARG USERNAME=user
 ARG USER_UID=1010
 ARG USER_GID=$USER_UID
@@ -134,6 +131,9 @@ RUN echo "Installing ohmyzsh" && mkdir -p ~/downloads/ohmyzsh && cd ~/downloads/
     export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" && \
     kubectl krew install stern explore node-shell && \
     rm -rf ~/downloads
+
+# Install asdf packages
+RUN asdf plugin add chezmoi && asdf install chezmoi 2.62.6 && asdf global chezmoi 2.62.6
 
 # Zsh completions
 RUN echo "source <(kubectl completion zsh)" >> ~/.zsh_completion && \
