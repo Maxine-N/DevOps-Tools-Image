@@ -9,7 +9,7 @@ ARG OPENTOFU_VERSION=1.9.0 # github-releases/opentofu/opentofu
 # Kubernetes
 ARG ASDF_VERSION=v0.18.0 # github-releases/asdf-vm/asdf
 ARG TALOSCTL_VERSION=v1.9.3 # github-releases/siderolabs/talos
-ARG KUBECTL_VERSION=v1.31.3 # github-releases/kubernetes/kubernetes
+ARG KUBECTL_VERSION=v1.33.2 # github-releases/kubernetes/kubernetes
 ARG KREW_VERSION=v0.4.4 # github-releases/kubernetes-sigs/krew
 ARG FLUX_VERSION=2.4.0 # github-releases/fluxcd/flux2
 ARG ARGOCD_VERSION=2.14.1 # github-releases/argoproj/argo-cd
