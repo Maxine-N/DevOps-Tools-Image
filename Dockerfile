@@ -4,7 +4,7 @@ LABEL description="A Docker image containing all the tools I use for my tasks as
 
 # Infrastructure as code
 ARG TERRAFORM_VERSION=1.10.5 # github-releases/hashicorp/terraform
-ARG OPENTOFU_VERSION=1.9.0 # github-releases/opentofu/opentofu
+ARG OPENTOFU_VERSION=1.10.5 # github-releases/opentofu/opentofu
 
 # Kubernetes
 ARG ASDF_VERSION=v0.18.0 # github-releases/asdf-vm/asdf
