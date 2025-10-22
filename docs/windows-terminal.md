@@ -93,6 +93,7 @@ You can set up a profile in Windows Terminal to use the container. There are two
 
 1. Open Windows Terminal settings with `CTRL+,`.
 2. Click on `+ Add new profile`.
+    ![](windows-terminal/new-profile.png)
 3. Configure the profile with the following settings:
    - **Name**: `Dev Env`
    - **Command line**: 
@@ -103,6 +104,7 @@ You can set up a profile in Windows Terminal to use the container. There are two
      ```ps1
      <PathToYourDirectory>
      ```
+    ![](windows-terminal/my-profile.png)
 
 ### Method 2: Adding a New Profile via `settings.json`
 
