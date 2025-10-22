@@ -7,7 +7,7 @@ ARG TERRAFORM_VERSION=1.10.5 # github-releases/hashicorp/terraform
 ARG OPENTOFU_VERSION=1.9.0 # github-releases/opentofu/opentofu
 
 # Kubernetes
-ARG ASDF_VERSION=v0.18.0 # github-releases/asdf-vm/asdf
+ARG CHEZMOI_VERSION=2.66.1 # github-releases/twpayne/chezmoi
 ARG TALOSCTL_VERSION=v1.9.3 # github-releases/siderolabs/talos
 ARG KUBECTL_VERSION=v1.31.3 # github-releases/kubernetes/kubernetes
 ARG KREW_VERSION=v0.4.4 # github-releases/kubernetes-sigs/krew
@@ -44,10 +44,10 @@ ENV LC_ALL=en_US.UTF-8
 
 # Download packages from their release websites
 RUN mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
-    # Helm
-    echo "Installing asdf" && mkdir -p asdf && cd asdf && \
-    curl -fsSL -o asdf.tar.gz https://github.com/asdf-vm/asdf/releases/download/${ASDF_VERSION}/asdf-${ASDF_VERSION}-linux-amd64.tar.gz && \
-    tar -xzf asdf.tar.gz && mv asdf /usr/local/bin/asdf && chmod +x /usr/local/bin/asdf && \
+    # chezmoi
+    echo "Installing chezmoi" && mkdir -p chezmoi && cd chezmoi && \
+    curl -fsSL -o chezmoi.deb https://github.com/twpayne/chezmoi/releases/download/v${CHEZMOI_VERSION}/chezmoi_${CHEZMOI_VERSION}_linux_amd64.deb && \
+    dpkg -i chezmoi.deb && \
     # Helm
     echo "Installing helm" && mkdir -p ../helm && cd ../helm && \
     curl -fsSL -o helm.tar.gz https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
@@ -141,9 +141,6 @@ RUN echo "Installing ohmyzsh" && mkdir -p ~/downloads/ohmyzsh && cd ~/downloads/
     export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" && \
     kubectl krew install stern explore node-shell ctx ns && \
     rm -rf ~/downloads
-
-# Install asdf packages
-RUN asdf plugin add chezmoi && asdf install chezmoi 2.62.6 && asdf set chezmoi 2.62.6
 
 # Zsh completions
 RUN echo "source <(kubectl completion zsh)" >> ~/.zsh_completion && \
