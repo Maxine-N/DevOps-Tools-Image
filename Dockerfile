@@ -28,7 +28,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
       ansible-core \
       python3 python3-pip python3-virtualenv python3-jmespath \
-      git openssl openssh-client openssh-server sshpass age \
+      git openssl openssh-client openssh-server sshpass gpg age \
       curl zsh tmux nano fonts-firacode \
       jq yq fzf kubectx sudo unzip locales && \
     # Clean up
