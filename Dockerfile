@@ -14,6 +14,7 @@ ARG KREW_VERSION=v0.4.4 # github-releases/kubernetes-sigs/krew
 ARG FLUX_VERSION=2.4.0 # github-releases/fluxcd/flux2
 ARG ARGOCD_VERSION=2.14.1 # github-releases/argoproj/argo-cd
 ARG HELM_VERSION=3.17.0 # github-releases/helm/helm
+ARG DOCKER_CLI_VERSION=28.5.1 # github-tags/docker/cli
 ARG VIDDY_VERSION=1.3.0 # github-releases/sachaos/viddy
 ARG KIND_VERSION=v0.29.0 # github-releases/kubernetes-sigs/kind
 ARG LONGHORNCTL_VERSION=v1.8.0 # github-releases/longhorn/cli
@@ -52,6 +53,10 @@ RUN mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
     echo "Installing helm" && mkdir -p ../helm && cd ../helm && \
     curl -fsSL -o helm.tar.gz https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
     tar -xzf helm.tar.gz && mv linux-amd64/helm /usr/local/bin/helm && chmod +x /usr/local/bin/helm && \
+    # Docker CLI
+    echo "Installing docker-cli" && mkdir -p ../docker-cli && cd ../docker-cli && \
+    curl -fsSL -o docker-cli.deb https://download.docker.com/linux/ubuntu/dists/noble/pool/stable/amd64/docker-ce-cli_${DOCKER_CLI_VERSION}-1~ubuntu.24.04~noble_amd64.deb && \
+    dpkg -i docker-cli.deb && \
     # Kubectl
     echo "Installing kubectl" && mkdir -p ../kubectl && cd ../kubectl && \
     curl -fsSL -o kubectl https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl && \
