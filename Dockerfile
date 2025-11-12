@@ -15,6 +15,7 @@ ARG FLUX_VERSION=2.4.0 # github-releases/fluxcd/flux2
 ARG ARGOCD_VERSION=2.14.1 # github-releases/argoproj/argo-cd
 ARG HELM_VERSION=3.17.0 # github-releases/helm/helm
 ARG DOCKER_CLI_VERSION=28.5.1 # github-tags/docker/cli
+ARG STACKIT_CLI_VERSION=0.47.0 # github-releases/stackitcloud/stackit-cli
 ARG VIDDY_VERSION=1.3.0 # github-releases/sachaos/viddy
 ARG KIND_VERSION=v0.29.0 # github-releases/kubernetes-sigs/kind
 ARG LONGHORNCTL_VERSION=v1.8.0 # github-releases/longhorn/cli
@@ -57,6 +58,10 @@ RUN mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
     echo "Installing docker-cli" && mkdir -p ../docker-cli && cd ../docker-cli && \
     curl -fsSL -o docker-cli.deb https://download.docker.com/linux/ubuntu/dists/noble/pool/stable/amd64/docker-ce-cli_${DOCKER_CLI_VERSION}-1~ubuntu.24.04~noble_amd64.deb && \
     dpkg -i docker-cli.deb && \
+    # Stackit CLI
+    echo "Installing stackit-cli" && mkdir -p ../stackit-cli && cd ../stackit-cli && \
+    curl -fsSL -o stackit-cli.deb https://github.com/stackitcloud/stackit-cli/releases/download/v${STACKIT_CLI_VERSION}/stackit_${STACKIT_CLI_VERSION}_linux_amd64.deb && \
+    dpkg -i stackit-cli.deb && \
     # Kubectl
     echo "Installing kubectl" && mkdir -p ../kubectl && cd ../kubectl && \
     curl -fsSL -o kubectl https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl && \
