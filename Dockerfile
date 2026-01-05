@@ -8,7 +8,7 @@ ARG OPENTOFU_VERSION=1.9.0 # github-releases/opentofu/opentofu
 
 # Kubernetes
 ARG CHEZMOI_VERSION=2.66.1 # github-releases/twpayne/chezmoi
-ARG TALOSCTL_VERSION=v1.9.3 # github-releases/siderolabs/talos
+ARG TALOSCTL_VERSION=v1.12.1 # github-releases/siderolabs/talos
 ARG KUBECTL_VERSION=v1.31.3 # github-releases/kubernetes/kubernetes
 ARG KREW_VERSION=v0.4.4 # github-releases/kubernetes-sigs/krew
 ARG FLUX_VERSION=2.4.0 # github-releases/fluxcd/flux2
