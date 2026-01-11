@@ -19,7 +19,7 @@ ARG STACKIT_CLI_VERSION=0.47.0 # github-releases/stackitcloud/stackit-cli
 ARG VIDDY_VERSION=1.3.0 # github-releases/sachaos/viddy
 ARG KIND_VERSION=v0.29.0 # github-releases/kubernetes-sigs/kind
 ARG LONGHORNCTL_VERSION=v1.8.0 # github-releases/longhorn/cli
-ARG K9S_VERSION=0.32.7 # github-releases/derailed/k9s
+ARG K9S_VERSION=0.50.18 # github-releases/derailed/k9s
 ARG SOPS_VERSION=3.9.4 # github-releases/getsops/sops
 
 # Ansible Galaxy
