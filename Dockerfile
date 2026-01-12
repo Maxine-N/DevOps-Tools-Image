@@ -3,7 +3,7 @@ FROM ubuntu:24.04
 LABEL description="A Docker image containing all the tools I use for my tasks as a DevOps Engineer."
 
 # Infrastructure as code
-ARG TERRAFORM_VERSION=1.10.5 # github-releases/hashicorp/terraform
+ARG TERRAFORM_VERSION=1.14.3 # github-releases/hashicorp/terraform
 ARG OPENTOFU_VERSION=1.11.2 # github-releases/opentofu/opentofu
 
 # Kubernetes
