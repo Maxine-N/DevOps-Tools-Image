@@ -2,6 +2,22 @@ FROM ubuntu:24.04
 
 LABEL description="A Docker image containing all the tools I use for my tasks as a DevOps Engineer."
 
+# Platform detection for multi-architecture support
+ARG TARGETPLATFORM
+ARG BUILDPLATFORM
+RUN echo "Building for $TARGETPLATFORM on $BUILDPLATFORM"
+
+# Set architecture variables based on TARGETPLATFORM
+RUN if [ "$TARGETPLATFORM" = "linux/arm64" ] || [ "$TARGETPLATFORM" = "linux/arm64/v8" ]; then \
+      echo "arm64" > /tmp/arch && \
+      echo "aarch64" > /tmp/arch_alt; \
+    else \
+      echo "amd64" > /tmp/arch && \
+      echo "x86_64" > /tmp/arch_alt; \
+    fi
+RUN ARCH=$(cat /tmp/arch) && echo "ARCH=$ARCH"
+RUN ARCH_ALT=$(cat /tmp/arch_alt) && echo "ARCH_ALT=$ARCH_ALT"
+
 # Infrastructure as code
 ARG TERRAFORM_VERSION=1.10.5 # github-releases/hashicorp/terraform
 ARG OPENTOFU_VERSION=1.11.2 # github-releases/opentofu/opentofu
@@ -12,7 +28,7 @@ ARG TALOSCTL_VERSION=v1.9.3 # github-releases/siderolabs/talos
 ARG KUBECTL_VERSION=v1.31.3 # github-releases/kubernetes/kubernetes
 ARG KREW_VERSION=v0.4.4 # github-releases/kubernetes-sigs/krew
 ARG FLUX_VERSION=2.4.0 # github-releases/fluxcd/flux2
-ARG ARGOCD_VERSION=2.14.1 # github-releases/argoproj/argo-cd
+ARG ARGOCD_VERSION=3.3.3 # github-releases/argoproj/argo-cd
 ARG HELM_VERSION=3.17.0 # github-releases/helm/helm
 ARG DOCKER_CLI_VERSION=28.5.1 # github-tags/docker/cli
 ARG STACKIT_CLI_VERSION=0.47.0 # github-releases/stackitcloud/stackit-cli
@@ -45,74 +61,85 @@ ENV LANG=en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
 
 # Download packages from their release websites
-RUN mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
+RUN ARCH=$(cat /tmp/arch) && ARCH_ALT=$(cat /tmp/arch_alt) && mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
     # chezmoi
-    echo "Installing chezmoi" && mkdir -p chezmoi && cd chezmoi && \
-    curl -fsSL -o chezmoi.deb https://github.com/twpayne/chezmoi/releases/download/v${CHEZMOI_VERSION}/chezmoi_${CHEZMOI_VERSION}_linux_amd64.deb && \
+    echo "Installing chezmoi for $ARCH" && mkdir -p chezmoi && cd chezmoi && \
+    curl -fsSL -o chezmoi.deb https://github.com/twpayne/chezmoi/releases/download/v${CHEZMOI_VERSION}/chezmoi_${CHEZMOI_VERSION}_linux_${ARCH}.deb && \
     dpkg -i chezmoi.deb && \
     # Helm
-    echo "Installing helm" && mkdir -p ../helm && cd ../helm && \
-    curl -fsSL -o helm.tar.gz https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz && \
-    tar -xzf helm.tar.gz && mv linux-amd64/helm /usr/local/bin/helm && chmod +x /usr/local/bin/helm && \
-    # Docker CLI
-    echo "Installing docker-cli" && mkdir -p ../docker-cli && cd ../docker-cli && \
-    curl -fsSL -o docker-cli.deb https://download.docker.com/linux/ubuntu/dists/noble/pool/stable/amd64/docker-ce-cli_${DOCKER_CLI_VERSION}-1~ubuntu.24.04~noble_amd64.deb && \
+    echo "Installing helm for $ARCH" && mkdir -p ../helm && cd ../helm && \
+    curl -fsSL -o helm.tar.gz https://get.helm.sh/helm-v${HELM_VERSION}-linux-${ARCH}.tar.gz && \
+    tar -xzf helm.tar.gz && mv linux-${ARCH}/helm /usr/local/bin/helm && chmod +x /usr/local/bin/helm && \
+    # Docker CLI - ARM64 uses arm64, AMD64 uses amd64
+    echo "Installing docker-cli for $ARCH" && mkdir -p ../docker-cli && cd ../docker-cli && \
+    if [ "$ARCH" = "arm64" ]; then \
+      curl -fsSL -o docker-cli.deb https://download.docker.com/linux/ubuntu/dists/noble/pool/stable/arm64/docker-ce-cli_${DOCKER_CLI_VERSION}-1~ubuntu.24.04~noble_arm64.deb; \
+    else \
+      curl -fsSL -o docker-cli.deb https://download.docker.com/linux/ubuntu/dists/noble/pool/stable/amd64/docker-ce-cli_${DOCKER_CLI_VERSION}-1~ubuntu.24.04~noble_amd64.deb; \
+    fi && \
     dpkg -i docker-cli.deb && \
     # Stackit CLI
-    echo "Installing stackit-cli" && mkdir -p ../stackit-cli && cd ../stackit-cli && \
-    curl -fsSL -o stackit-cli.deb https://github.com/stackitcloud/stackit-cli/releases/download/v${STACKIT_CLI_VERSION}/stackit_${STACKIT_CLI_VERSION}_linux_amd64.deb && \
+    echo "Installing stackit-cli for $ARCH" && mkdir -p ../stackit-cli && cd ../stackit-cli && \
+    curl -fsSL -o stackit-cli.deb https://github.com/stackitcloud/stackit-cli/releases/download/v${STACKIT_CLI_VERSION}/stackit_${STACKIT_CLI_VERSION}_linux_${ARCH}.deb && \
     dpkg -i stackit-cli.deb && \
     # Kubectl
-    echo "Installing kubectl" && mkdir -p ../kubectl && cd ../kubectl && \
-    curl -fsSL -o kubectl https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl && \
+    echo "Installing kubectl for $ARCH" && mkdir -p ../kubectl && cd ../kubectl && \
+    curl -fsSL -o kubectl https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/${ARCH}/kubectl && \
     mv kubectl /usr/local/bin/kubectl && chmod +x /usr/local/bin/kubectl && \
     # talosctl
-    echo "Installing talosctl" && mkdir -p ../talosctl && cd ../talosctl && \
-    curl -fsSL -o talosctl https://github.com/siderolabs/talos/releases/download/${TALOSCTL_VERSION}/talosctl-linux-amd64 && \
+    echo "Installing talosctl for $ARCH" && mkdir -p ../talosctl && cd ../talosctl && \
+    curl -fsSL -o talosctl https://github.com/siderolabs/talos/releases/download/${TALOSCTL_VERSION}/talosctl-linux-${ARCH} && \
     mv talosctl /usr/local/bin/talosctl && chmod +x /usr/local/bin/talosctl && \
     # Flux
-    echo "Installing flux" && mkdir -p ../flux && cd ../flux && \
-    curl -fsSL -o flux.tar.gz https://github.com/fluxcd/flux2/releases/download/v${FLUX_VERSION}/flux_${FLUX_VERSION}_linux_amd64.tar.gz && \
+    echo "Installing flux for $ARCH" && mkdir -p ../flux && cd ../flux && \
+    curl -fsSL -o flux.tar.gz https://github.com/fluxcd/flux2/releases/download/v${FLUX_VERSION}/flux_${FLUX_VERSION}_linux_${ARCH}.tar.gz && \
     tar -xzf flux.tar.gz && mv flux /usr/local/bin/flux && chmod +x /usr/local/bin/flux && \
-    # viddy
-    echo "Installing viddy" && mkdir -p ../viddy && cd ../viddy && \
-    curl -fsSL -o viddy.tar.gz https://github.com/sachaos/viddy/releases/download/v${VIDDY_VERSION}/viddy-v${VIDDY_VERSION}-linux-x86_64.tar.gz && \
+    # viddy - uses x86_64/arm64 naming
+    echo "Installing viddy for $ARCH" && mkdir -p ../viddy && cd ../viddy && \
+    if [ "$ARCH" = "arm64" ]; then \
+      curl -fsSL -o viddy.tar.gz https://github.com/sachaos/viddy/releases/download/v${VIDDY_VERSION}/viddy-v${VIDDY_VERSION}-linux-arm64.tar.gz; \
+    else \
+      curl -fsSL -o viddy.tar.gz https://github.com/sachaos/viddy/releases/download/v${VIDDY_VERSION}/viddy-v${VIDDY_VERSION}-linux-x86_64.tar.gz; \
+    fi && \
     tar -xzf viddy.tar.gz && mv viddy /usr/local/bin/viddy && chmod +x /usr/local/bin/viddy && \
     # Argo CD
-    echo "Installing argocd" && mkdir -p ../argocd && cd ../argocd && \
-    curl -fsSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/download/v${ARGOCD_VERSION}/argocd-linux-amd64 && \
-    install -m 555 argocd-linux-amd64 /usr/local/bin/argocd && \
+    echo "Installing argocd for $ARCH" && mkdir -p ../argocd && cd ../argocd && \
+    curl -fsSL -o argocd-linux-${ARCH} https://github.com/argoproj/argo-cd/releases/download/v${ARGOCD_VERSION}/argocd-linux-${ARCH} && \
+    install -m 555 argocd-linux-${ARCH} /usr/local/bin/argocd && \
     # Longhornctl
-    echo "Installing longhornctl & longhornctl-local" && mkdir -p ../longhornctl && cd ../longhornctl && \
-    curl -fsSL -o longhornctl https://github.com/longhorn/cli/releases/download/${LONGHORNCTL_VERSION}/longhornctl-linux-amd64 && \
-    curl -fsSL -o longhornctl-local https://github.com/longhorn/cli/releases/download/${LONGHORNCTL_VERSION}/longhornctl-local-linux-amd64 && \
+    echo "Installing longhornctl & longhornctl-local for $ARCH" && mkdir -p ../longhornctl && cd ../longhornctl && \
+    curl -fsSL -o longhornctl https://github.com/longhorn/cli/releases/download/${LONGHORNCTL_VERSION}/longhornctl-linux-${ARCH} && \
+    curl -fsSL -o longhornctl-local https://github.com/longhorn/cli/releases/download/${LONGHORNCTL_VERSION}/longhornctl-local-linux-${ARCH} && \
     mv longhornctl longhornctl-local /usr/local/bin/ && chmod +x /usr/local/bin/longhornctl* && \
     # K9s
-    echo "Installing k9s" && mkdir -p ../k9s && cd ../k9s && \
-    curl -fsSL -o k9s.tar.gz https://github.com/derailed/k9s/releases/download/v${K9S_VERSION}/k9s_Linux_amd64.tar.gz && \
+    echo "Installing k9s for $ARCH" && mkdir -p ../k9s && cd ../k9s && \
+    curl -fsSL -o k9s.tar.gz https://github.com/derailed/k9s/releases/download/v${K9S_VERSION}/k9s_Linux_${ARCH}.tar.gz && \
     tar -xzf k9s.tar.gz && mv k9s /usr/local/bin/k9s && chmod +x /usr/local/bin/k9s && \
     # Terraform
-    echo "Installing terraform" && mkdir -p ../terraform && cd ../terraform && \
-    curl -fsSL -o terraform.zip https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
+    echo "Installing terraform for $ARCH" && mkdir -p ../terraform && cd ../terraform && \
+    curl -fsSL -o terraform.zip https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_${ARCH}.zip && \
     unzip terraform.zip && mv terraform /usr/local/bin/terraform && chmod +x /usr/local/bin/terraform && \
     # OpenTofu
-    echo "Installing opentofu" && mkdir -p ../opentofu && cd ../opentofu && \
-    curl -fsSL -o opentofu.zip https://github.com/opentofu/opentofu/releases/download/v${OPENTOFU_VERSION}/tofu_${OPENTOFU_VERSION}_linux_amd64.zip && \
+    echo "Installing opentofu for $ARCH" && mkdir -p ../opentofu && cd ../opentofu && \
+    curl -fsSL -o opentofu.zip https://github.com/opentofu/opentofu/releases/download/v${OPENTOFU_VERSION}/tofu_${OPENTOFU_VERSION}_linux_${ARCH}.zip && \
     unzip opentofu.zip && mv tofu /usr/local/bin/tofu && chmod +x /usr/local/bin/tofu && \
     # sops
-    echo "Installing sops" && mkdir -p ../sops && cd ../sops && \
-    curl -fsSL -o sops https://github.com/getsops/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux.amd64 && \
+    echo "Installing sops for $ARCH" && mkdir -p ../sops && cd ../sops && \
+    curl -fsSL -o sops https://github.com/getsops/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux.${ARCH} && \
     mv sops /usr/local/bin/sops && chmod +x /usr/local/bin/sops && \
     # MinIO client
-    echo "Installing mc" && mkdir -p ../minio && cd ../minio && \
-    curl -fsSL -o mc https://dl.min.io/client/mc/release/linux-amd64/mc && \
+    echo "Installing mc for $ARCH" && mkdir -p ../minio && cd ../minio && \
+    curl -fsSL -o mc https://dl.min.io/client/mc/release/linux-${ARCH}/mc && \
     mv mc /usr/local/bin/mc && chmod +x /usr/local/bin/mc && \
     # Kind
-    echo "Installing kind" && mkdir -p ../kind && cd ../kind && \
-    curl -fsSL -o kind https://kind.sigs.k8s.io/dl/${KIND_VERSION}/kind-linux-amd64 && \
+    echo "Installing kind for $ARCH" && mkdir -p ../kind && cd ../kind && \
+    curl -fsSL -o kind https://kind.sigs.k8s.io/dl/${KIND_VERSION}/kind-linux-${ARCH} && \
     mv kind /usr/local/bin/kind && chmod +x /usr/local/bin/kind && \
     # Ansible Galaxy
-    ansible-galaxy collection install community.general:==${ANSIBLE_COMMUNITY_GENERAL_VERSION}
+    ansible-galaxy collection install community.general:==${ANSIBLE_COMMUNITY_GENERAL_VERSION} && \
+    # Cleanup
+    echo "Cleaning up downloads" && \
+    rm -rf /tmp/downloads
 
 # Install jinja2-cli
 RUN sudo pip install jinja2-cli --break-system-packages
@@ -126,16 +153,12 @@ RUN groupadd --gid $USER_GID $USERNAME \
  && echo "$USERNAME ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME \
  && chmod 0440 /etc/sudoers.d/$USERNAME
 
-# Clean up downloads\ 
-
-RUN rm -rf /tmp/downloads
-
 # Switch to non-root user
 USER $USERNAME
 WORKDIR /home/$USERNAME
 
 # Oh My Zsh + Krew plugins
-RUN echo "Installing ohmyzsh" && mkdir -p ~/downloads/ohmyzsh && cd ~/downloads/ohmyzsh && \
+RUN ARCH=$(cat /tmp/arch) && echo "Installing ohmyzsh" && mkdir -p ~/downloads/ohmyzsh && cd ~/downloads/ohmyzsh && \
     curl -fsSL -o install.sh https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh && \
     sh install.sh && mkdir -p ~/.oh-my-zsh/custom/completions && mkdir -p ~/.oh-my-zsh/custom/plugins \
     # ohmyzsh - fzf-zsh 
@@ -148,9 +171,9 @@ RUN echo "Installing ohmyzsh" && mkdir -p ~/downloads/ohmyzsh && cd ~/downloads/
     mv ~/.kubectx/completion/_kubens.zsh ~/.oh-my-zsh/custom/completions/_kubens.zsh && \
     rm -rf ~/.kubectx && \
     # krew
-    echo "Installing krew" && mkdir -p ~/downloads/krew && cd ~/downloads/krew && \
-    curl -fsSL -o krew.tar.gz https://github.com/kubernetes-sigs/krew/releases/download/${KREW_VERSION}/krew-linux_amd64.tar.gz && \
-    tar -xzf krew.tar.gz && ./krew-linux_amd64 install krew && \
+    echo "Installing krew for $ARCH" && mkdir -p ~/downloads/krew && cd ~/downloads/krew && \
+    curl -fsSL -o krew.tar.gz https://github.com/kubernetes-sigs/krew/releases/download/${KREW_VERSION}/krew-linux_${ARCH}.tar.gz && \
+    tar -xzf krew.tar.gz && ./krew-linux_${ARCH} install krew && \
     export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" && \
     kubectl krew install stern explore node-shell ctx ns && \
     rm -rf ~/downloads

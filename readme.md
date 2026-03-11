@@ -54,6 +54,32 @@ For running it as a devcontainer see the dedicated documentation: [devcontainer.
 
 Sourcing `~/.zsh_completion` can of course also be automated by including it in your `.zshrc` and mounting a persistent version of your `.zshrc`. 
 
+## Multi-Architecture Support
+This Docker image now supports both **AMD64 (x86-64)** and **ARM64 (Apple Silicon)** architectures. The Dockerfile automatically detects the target platform and downloads the correct binaries for your architecture.
+
+### Building for Different Architectures
+The `docker-compose.yaml` file is configured to support multi-platform builds using Docker BuildX:
+
+**For AMD64:**
+```sh
+docker buildx build --platform linux/amd64 -t devops-tools:amd64 .
+```
+
+**For ARM64 (Apple Silicon):**
+```sh
+docker buildx build --platform linux/arm64 -t devops-tools:arm64 .
+```
+
+**For both architectures simultaneously:**
+```sh
+docker buildx build --platform linux/amd64,linux/arm64 -t devops-tools:latest .
+```
+
+If you don't have BuildX configured, you can set it up with:
+```sh
+docker buildx create --driver docker-container --use --name multiplatform-builder
+```
+
 ### Tips and tricks
 
 For example by adding this to your docker-compose.yaml
