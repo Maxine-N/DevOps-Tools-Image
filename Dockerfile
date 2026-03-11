@@ -114,6 +114,9 @@ RUN mkdir -p /tmp/downloads/ && cd /tmp/downloads && \
     # Ansible Galaxy
     ansible-galaxy collection install community.general:==${ANSIBLE_COMMUNITY_GENERAL_VERSION}
 
+# Install jinja2-cli
+RUN sudo pip install jinja2-cli --break-system-packages
+
 ARG USERNAME=user
 ARG USER_UID=1010
 ARG USER_GID=$USER_UID
