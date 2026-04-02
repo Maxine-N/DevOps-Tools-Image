@@ -31,11 +31,23 @@ Tools marked with an asterisk (*) include completions.
 - [Flux](https://fluxcd.io)*
 - [Helm](https://helm.sh)*
 - [K9s](https://k9scli.io)*
+- [Kind](https://kind.sigs.k8s.io)
 
-### Other tools 
+### Cloud & Infrastructure CLIs
+- [hcloud](https://github.com/hetznercloud/cli)*
+- [stackit-cli](https://github.com/stackitcloud/stackit-cli)
+- [argocd](https://argo-cd.readthedocs.io)
+- [longhornctl](https://longhorn.io)
+- [talosctl](https://www.talos.dev/docs/v1.9/)
+
+### Utility and Other Tools
 - [chezmoi](https://www.chezmoi.io)
 - [sops](https://getsops.io)
 - [age](https://age-encryption.org)
+- [docker-cli](https://www.docker.com)
+- [viddy](https://github.com/sachaos/viddy)
+- [mc (MinIO client)](https://min.io)
+- [jinja2-cli](https://github.com/pallets/jinja)
 
 ## How to Use This Image 
 ### As a VSCode devcontainer
