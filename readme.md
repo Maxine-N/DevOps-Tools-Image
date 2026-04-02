@@ -20,6 +20,7 @@ Tools marked with an asterisk (*) include completions.
 
 ### Infrastructure as Code (IaC) Tools
 - [Ansible](https://www.ansible.com)
+- [Packer](https://www.packer.io)*
 - [Terraform](https://www.terraform.io)*
 - [OpenTofu](https://opentofu.org)*
 

@@ -19,6 +19,7 @@ RUN ARCH=$(cat /tmp/arch) && echo "ARCH=$ARCH"
 RUN ARCH_ALT=$(cat /tmp/arch_alt) && echo "ARCH_ALT=$ARCH_ALT"
 
 # Infrastructure as code
+ARG PACKER_VERSION=1.15.1 # github-releases/hashicorp/packer
 ARG TERRAFORM_VERSION=1.10.5 # github-releases/hashicorp/terraform
 ARG OPENTOFU_VERSION=1.11.2 # github-releases/opentofu/opentofu
 
@@ -122,6 +123,10 @@ RUN ARCH=$(cat /tmp/arch) && ARCH_ALT=$(cat /tmp/arch_alt) && mkdir -p /tmp/down
     echo "Installing k9s for $ARCH" && mkdir -p ../k9s && cd ../k9s && \
     curl -fsSL -o k9s.tar.gz https://github.com/derailed/k9s/releases/download/v${K9S_VERSION}/k9s_Linux_${ARCH}.tar.gz && \
     tar -xzf k9s.tar.gz && mv k9s /usr/local/bin/k9s && chmod +x /usr/local/bin/k9s && \
+    # Packer
+    echo "Installing packer for $ARCH" && mkdir -p ../packer && cd ../packer && \
+    curl -fsSL -o packer.zip https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_${ARCH}.zip && \
+    unzip packer.zip && mv packer /usr/local/bin/packer && chmod +x /usr/local/bin/packer && \
     # Terraform
     echo "Installing terraform for $ARCH" && mkdir -p ../terraform && cd ../terraform && \
     curl -fsSL -o terraform.zip https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_${ARCH}.zip && \
@@ -193,6 +198,7 @@ RUN echo "source <(kubectl completion zsh)" >> ~/.zsh_completion && \
     echo "source <(k9s completion zsh)" >> ~/.zsh_completion && \
     echo "source <(hcloud completion bash)" >> ~/.zsh_completion && \
     echo "complete -C /usr/local/bin/terraform terraform" >> ~/.zsh_completion && \
+    echo "complete -C /usr/local/bin/packer packer" >> ~/.zsh_completion && \
     echo "complete -C /usr/local/bin/tofu tofu" >> ~/.zsh_completion
 
 CMD ["/bin/zsh"]
