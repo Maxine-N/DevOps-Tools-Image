@@ -31,12 +31,15 @@ ARG FLUX_VERSION=2.4.0 # github-releases/fluxcd/flux2
 ARG ARGOCD_VERSION=3.3.3 # github-releases/argoproj/argo-cd
 ARG HELM_VERSION=3.17.0 # github-releases/helm/helm
 ARG DOCKER_CLI_VERSION=28.5.1 # github-tags/docker/cli
-ARG STACKIT_CLI_VERSION=0.47.0 # github-releases/stackitcloud/stackit-cli
 ARG VIDDY_VERSION=1.3.0 # github-releases/sachaos/viddy
 ARG KIND_VERSION=v0.29.0 # github-releases/kubernetes-sigs/kind
 ARG LONGHORNCTL_VERSION=v1.8.0 # github-releases/longhorn/cli
 ARG K9S_VERSION=0.50.18 # github-releases/derailed/k9s
 ARG SOPS_VERSION=3.9.4 # github-releases/getsops/sops
+
+# Public cloud CLIs
+ARG HCLOUD_VERSION=1.62.0 # github-releases/hetznercloud/cli
+ARG STACKIT_CLI_VERSION=0.47.0 # github-releases/stackitcloud/stackit-cli
 
 # Ansible Galaxy
 ARG ANSIBLE_COMMUNITY_GENERAL_VERSION=9.1.0
@@ -111,6 +114,10 @@ RUN ARCH=$(cat /tmp/arch) && ARCH_ALT=$(cat /tmp/arch_alt) && mkdir -p /tmp/down
     curl -fsSL -o longhornctl https://github.com/longhorn/cli/releases/download/${LONGHORNCTL_VERSION}/longhornctl-linux-${ARCH} && \
     curl -fsSL -o longhornctl-local https://github.com/longhorn/cli/releases/download/${LONGHORNCTL_VERSION}/longhornctl-local-linux-${ARCH} && \
     mv longhornctl longhornctl-local /usr/local/bin/ && chmod +x /usr/local/bin/longhornctl* && \
+    # hcloud
+    echo "Installing hcloud cli for $ARCH" && mkdir -p ../hcloud && cd ../hcloud && \
+    curl -fsSL -o hcloud.tar.gz https://github.com/hetznercloud/cli/releases/download/v${HCLOUD_VERSION}/hcloud-linux-${ARCH}.tar.gz && \
+    tar -xzf hcloud.tar.gz && mv hcloud /usr/local/bin/hcloud && chmod +x /usr/local/bin/hcloud && \
     # K9s
     echo "Installing k9s for $ARCH" && mkdir -p ../k9s && cd ../k9s && \
     curl -fsSL -o k9s.tar.gz https://github.com/derailed/k9s/releases/download/v${K9S_VERSION}/k9s_Linux_${ARCH}.tar.gz && \
@@ -184,6 +191,7 @@ RUN echo "source <(kubectl completion zsh)" >> ~/.zsh_completion && \
     echo "source <(flux completion zsh)" >> ~/.zsh_completion && \
     echo "source <(helm completion zsh)" >> ~/.zsh_completion && \
     echo "source <(k9s completion zsh)" >> ~/.zsh_completion && \
+    echo "source <(hcloud completion bash)" >> ~/.zsh_completion && \
     echo "complete -C /usr/local/bin/terraform terraform" >> ~/.zsh_completion && \
     echo "complete -C /usr/local/bin/tofu tofu" >> ~/.zsh_completion
 
