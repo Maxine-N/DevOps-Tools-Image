@@ -40,6 +40,7 @@ ARG SOPS_VERSION=3.9.4 # github-releases/getsops/sops
 
 # Public cloud CLIs
 ARG HCLOUD_VERSION=1.62.0 # github-releases/hetznercloud/cli
+ARG HETZNER_K3S_VERSION=2.4.6 # github-releases/vitobotta/hetzner-k3s
 ARG STACKIT_CLI_VERSION=0.47.0 # github-releases/stackitcloud/stackit-cli
 
 # Ansible Galaxy
@@ -119,6 +120,10 @@ RUN ARCH=$(cat /tmp/arch) && ARCH_ALT=$(cat /tmp/arch_alt) && mkdir -p /tmp/down
     echo "Installing hcloud cli for $ARCH" && mkdir -p ../hcloud && cd ../hcloud && \
     curl -fsSL -o hcloud.tar.gz https://github.com/hetznercloud/cli/releases/download/v${HCLOUD_VERSION}/hcloud-linux-${ARCH}.tar.gz && \
     tar -xzf hcloud.tar.gz && mv hcloud /usr/local/bin/hcloud && chmod +x /usr/local/bin/hcloud && \
+    # hetzner-k3s
+    echo "Installing hetzner-k3s for $ARCH" && mkdir -p ../hetzner-k3s && cd ../hetzner-k3s && \
+    curl -fsSL -o hetzner-k3s https://github.com/vitobotta/hetzner-k3s/releases/download/v${HETZNER_K3S_VERSION}/hetzner-k3s-linux-${ARCH} && \
+    mv hetzner-k3s /usr/local/bin/hetzner-k3s && chmod +x /usr/local/bin/hetzner-k3s && \
     # K9s
     echo "Installing k9s for $ARCH" && mkdir -p ../k9s && cd ../k9s && \
     curl -fsSL -o k9s.tar.gz https://github.com/derailed/k9s/releases/download/v${K9S_VERSION}/k9s_Linux_${ARCH}.tar.gz && \
