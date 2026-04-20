@@ -20,7 +20,7 @@ RUN ARCH_ALT=$(cat /tmp/arch_alt) && echo "ARCH_ALT=$ARCH_ALT"
 
 # Infrastructure as code
 ARG PACKER_VERSION=1.15.1 # github-releases/hashicorp/packer
-ARG TERRAFORM_VERSION=1.10.5 # github-releases/hashicorp/terraform
+ARG TERRAFORM_VERSION=1.14.9 # github-releases/hashicorp/terraform
 ARG OPENTOFU_VERSION=1.11.2 # github-releases/opentofu/opentofu
 
 # Kubernetes
