@@ -1,4 +1,4 @@
-FROM ubuntu:24.04
+FROM ubuntu:26.04
 
 LABEL description="A Docker image containing all the tools I use for my tasks as a DevOps Engineer."
 
