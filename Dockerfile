@@ -52,7 +52,7 @@ RUN apt-get update && apt-get upgrade -y && \
       ansible-core \
       python3 python3-pip python3-virtualenv python3-jmespath \
       git openssl openssh-client openssh-server sshpass gpg gpg-agent age \
-      curl zsh tmux nano fonts-firacode \
+      curl zsh tmux nano fonts-firacode ripgrep \
       jq yq fzf kubectx sudo unzip locales && \
     # Clean up
     apt-get clean && rm -rf /var/lib/apt/lists/*
