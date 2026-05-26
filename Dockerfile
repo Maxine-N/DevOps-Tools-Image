@@ -47,7 +47,7 @@ ARG STACKIT_CLI_VERSION=0.47.0 # github-releases/stackitcloud/stackit-cli
 ARG ANSIBLE_COMMUNITY_GENERAL_VERSION=9.1.0
 
 # Install via apt 
-RUN apt-get update && \
+RUN apt-get update && apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
       ansible-core \
       python3 python3-pip python3-virtualenv python3-jmespath \
