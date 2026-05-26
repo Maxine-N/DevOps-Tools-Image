@@ -42,6 +42,7 @@ ARG SOPS_VERSION=3.9.4 # github-releases/getsops/sops
 ARG HCLOUD_VERSION=1.62.0 # github-releases/hetznercloud/cli
 ARG HETZNER_K3S_VERSION=2.4.6 # github-releases/vitobotta/hetzner-k3s
 ARG STACKIT_CLI_VERSION=0.47.0 # github-releases/stackitcloud/stackit-cli
+ARG COPILOT_CLI_VERSION=1.0.54 # github-releases/github/copilot-cli
 
 # Ansible Galaxy
 ARG ANSIBLE_COMMUNITY_GENERAL_VERSION=9.1.0
@@ -87,6 +88,14 @@ RUN ARCH=$(cat /tmp/arch) && ARCH_ALT=$(cat /tmp/arch_alt) && mkdir -p /tmp/down
     echo "Installing stackit-cli for $ARCH" && mkdir -p ../stackit-cli && cd ../stackit-cli && \
     curl -fsSL -o stackit-cli.deb https://github.com/stackitcloud/stackit-cli/releases/download/v${STACKIT_CLI_VERSION}/stackit_${STACKIT_CLI_VERSION}_linux_${ARCH}.deb && \
     dpkg -i stackit-cli.deb && \
+    # Copilot CLI
+    echo "Installing copilot-cli for $ARCH" && mkdir -p ../copilot-cli && cd ../copilot-cli && \
+    if [ "$ARCH" = "arm64" ]; then \
+      curl -fsSL -o copilot-cli.tar.gz https://github.com/github/copilot-cli/releases/download/v${COPILOT_CLI_VERSION}/copilot-linux-arm64.tar.gz; \
+    else \
+      curl -fsSL -o copilot-cli.tar.gz https://github.com/github/copilot-cli/releases/download/v${COPILOT_CLI_VERSION}/copilot-linux-x64.tar.gz; \
+    fi && \
+    tar -xzf copilot-cli.tar.gz && mv copilot /usr/local/bin/copilot && chmod +x /usr/local/bin/copilot && \
     # Kubectl
     echo "Installing kubectl for $ARCH" && mkdir -p ../kubectl && cd ../kubectl && \
     curl -fsSL -o kubectl https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/${ARCH}/kubectl && \
