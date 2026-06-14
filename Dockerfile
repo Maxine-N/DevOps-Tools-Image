@@ -40,7 +40,7 @@ ARG SOPS_VERSION=3.9.4 # github-releases/getsops/sops
 
 # Public cloud CLIs
 ARG HCLOUD_VERSION=1.62.0 # github-releases/hetznercloud/cli
-ARG HETZNER_K3S_VERSION=2.4.6 # github-releases/vitobotta/hetzner-k3s
+ARG HETZNER_K3S_VERSION=2.5.0 # github-releases/vitobotta/hetzner-k3s
 ARG STACKIT_CLI_VERSION=0.47.0 # github-releases/stackitcloud/stackit-cli
 ARG COPILOT_CLI_VERSION=1.0.54 # github-releases/github/copilot-cli
 
