@@ -42,6 +42,7 @@ ARG SOPS_VERSION=3.9.4 # github-releases/getsops/sops
 ARG HCLOUD_VERSION=1.62.0 # github-releases/hetznercloud/cli
 ARG HETZNER_K3S_VERSION=2.5.0 # github-releases/vitobotta/hetzner-k3s
 ARG STACKIT_CLI_VERSION=0.47.0 # github-releases/stackitcloud/stackit-cli
+ARG AZURE_CLI_VERSION=2.87.0 # github-releases/azure/azure-cli
 ARG COPILOT_CLI_VERSION=1.0.54 # github-releases/github/copilot-cli
 
 # Ansible Galaxy
@@ -53,7 +54,8 @@ RUN apt-get update && apt-get upgrade -y && \
       ansible-core \
       python3 python3-pip python3-virtualenv python3-jmespath \
       git openssl openssh-client openssh-server sshpass gpg gpg-agent age \
-      curl zsh tmux nano fonts-firacode ripgrep \
+      curl zsh tmux nano fonts-firacode ripgrep less \
+      apt-transport-https ca-certificates gnupg \
       jq yq fzf kubectx sudo unzip locales && \
     # Clean up
     apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -163,9 +165,13 @@ RUN ARCH=$(cat /tmp/arch) && ARCH_ALT=$(cat /tmp/arch_alt) && mkdir -p /tmp/down
     mv kind /usr/local/bin/kind && chmod +x /usr/local/bin/kind && \
     # Ansible Galaxy
     ansible-galaxy collection install community.general:==${ANSIBLE_COMMUNITY_GENERAL_VERSION} && \
+    # Azure CLI
+    echo "Installing Azure CLI for $ARCH" && mkdir -p ../azure-cli && cd ../azure-cli && \
+    curl -fsSL -o azure-cli.deb https://packages.microsoft.com/repos/azure-cli/pool/main/a/azure-cli/azure-cli_${AZURE_CLI_VERSION}-1~noble_${ARCH}.deb && \
+    dpkg -i azure-cli.deb && \
     # Cleanup
     echo "Cleaning up downloads" && \
-    rm -rf /tmp/downloads
+    rm -rf /tmp/downloads && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install jinja2-cli
 RUN sudo pip install jinja2-cli --break-system-packages

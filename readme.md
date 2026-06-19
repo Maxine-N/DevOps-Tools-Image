@@ -37,6 +37,7 @@ Tools marked with an asterisk (*) include completions.
 ### Cloud & Infrastructure CLIs
 - [hcloud](https://github.com/hetznercloud/cli)*
 - [stackit-cli](https://github.com/stackitcloud/stackit-cli)
+- [azure-cli](https://github.com/Azure/azure-cli)
 - [argocd](https://argo-cd.readthedocs.io)
 - [longhornctl](https://longhorn.io)
 - [talosctl](https://www.talos.dev/docs/v1.9/)
