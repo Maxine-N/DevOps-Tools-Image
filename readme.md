@@ -50,6 +50,7 @@ Tools marked with an asterisk (*) include completions.
 - [viddy](https://github.com/sachaos/viddy)
 - [mc (MinIO client)](https://min.io)
 - [jinja2-cli](https://github.com/pallets/jinja)
+- [uv](https://docs.astral.sh/uv/)*
 
 ## How to Use This Image 
 ### As a VSCode devcontainer

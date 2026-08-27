@@ -37,6 +37,7 @@ ARG KIND_VERSION=v0.29.0 # github-releases/kubernetes-sigs/kind
 ARG LONGHORNCTL_VERSION=v1.8.0 # github-releases/longhorn/cli
 ARG K9S_VERSION=0.50.18 # github-releases/derailed/k9s
 ARG SOPS_VERSION=3.9.4 # github-releases/getsops/sops
+ARG UV_VERSION=0.12.6 # github-releases/astral-sh/uv
 
 # Public cloud CLIs
 ARG HCLOUD_VERSION=1.62.0 # github-releases/hetznercloud/cli
@@ -155,6 +156,11 @@ RUN ARCH=$(cat /tmp/arch) && ARCH_ALT=$(cat /tmp/arch_alt) && mkdir -p /tmp/down
     echo "Installing sops for $ARCH" && mkdir -p ../sops && cd ../sops && \
     curl -fsSL -o sops https://github.com/getsops/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux.${ARCH} && \
     mv sops /usr/local/bin/sops && chmod +x /usr/local/bin/sops && \
+    # UV
+    echo "Installing uv for $ARCH" && mkdir -p ../uv && cd ../uv && \
+    curl -fsSL -o uv.tar.gz https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/uv-${ARCH_ALT}-unknown-linux-gnu.tar.gz && \
+    tar -xzf uv.tar.gz && mv uv-${ARCH_ALT}-unknown-linux-gnu/uv uv-${ARCH_ALT}-unknown-linux-gnu/uvx /usr/local/bin/ && \
+    chmod +x /usr/local/bin/uv /usr/local/bin/uvx && \
     # MinIO client
     echo "Installing mc for $ARCH" && mkdir -p ../minio && cd ../minio && \
     curl -fsSL -o mc https://dl.min.io/client/mc/release/linux-${ARCH}/mc && \
@@ -219,6 +225,7 @@ RUN echo "source <(kubectl completion zsh)" >> ~/.zsh_completion && \
     echo "source <(hcloud completion bash)" >> ~/.zsh_completion && \
     echo "complete -C /usr/local/bin/terraform terraform" >> ~/.zsh_completion && \
     echo "complete -C /usr/local/bin/packer packer" >> ~/.zsh_completion && \
-    echo "complete -C /usr/local/bin/tofu tofu" >> ~/.zsh_completion
+    echo "complete -C /usr/local/bin/tofu tofu" >> ~/.zsh_completion && \
+    echo "source <(uv generate-shell-completion zsh)" >> ~/.zsh_completion
 
 CMD ["/bin/zsh"]
